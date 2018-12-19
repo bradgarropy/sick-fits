@@ -1,18 +1,26 @@
-import Header from "./Header"
+import React from "react"
+import PropTypes from "prop-types"
+import {ThemeProvider} from "styled-components"
 import Meta from "./Meta"
+import Header from "./Header"
+import theme from "./styles/theme"
+import StyledPage from "./styles/StyledPage"
+import Container from "./styles/Container"
 
 class Page extends React.Component {
-    static propTypes = {}
+    static propTypes = {children: PropTypes.node}
 
     state = {}
 
     render = () => {
         return (
-            <div>
-                <Meta />
-                <Header />
-                {this.props.children}
-            </div>
+            <ThemeProvider theme={theme}>
+                <StyledPage>
+                    <Meta/>
+                    <Header/>
+                    <Container>{this.props.children}</Container>
+                </StyledPage>
+            </ThemeProvider>
         )
     }
 }
