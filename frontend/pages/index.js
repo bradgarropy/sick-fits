@@ -1,9 +1,9 @@
-import Link from "next/link"
+import React from "react"
 
-const Home = props => {
+const Home = () => {
     return (
         <div>
-            <p>Hey!</p>
+            <p>Home!</p>
         </div>
     )
 }
