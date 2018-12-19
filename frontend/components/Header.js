@@ -1,11 +1,19 @@
+import React from "react"
+import Link from "next/link"
+import StyledHeader from "./styles/StyledHeader"
+import Logo from "./styles/Logo"
 import Navigation from "./Navigation"
 
-const Header = props => {
+const Header = () => {
     return (
-        <div>
+        <StyledHeader>
             <div className="bar">
-                <a href="/">Sick Fits</a>
-                <Navigation />
+                <Logo>
+                    <Link href="/">
+                        <a>Sick Fits</a>
+                    </Link>
+                </Logo>
+                <Navigation/>
             </div>
 
             <div className="sub-bar">
@@ -13,7 +21,7 @@ const Header = props => {
             </div>
 
             <div>Cart</div>
-        </div>
+        </StyledHeader>
     )
 }
 
