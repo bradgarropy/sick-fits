@@ -1,5 +1,7 @@
 import React from "react"
 import PropTypes from "prop-types"
+import Router from "next/router"
+import NProgress from "nprogress"
 import {ThemeProvider} from "styled-components"
 import {createGlobalStyle} from "styled-components"
 import Meta from "./Meta"
@@ -37,6 +39,18 @@ const GlobalStyle = createGlobalStyle`
         font-family: 'radnika_next';
     }
 `
+
+Router.onRouteChangeStart = () => {
+    NProgress.start()
+}
+
+Router.onRouteChangeComplete = () => {
+    NProgress.done()
+}
+
+Router.onRouteChangeError = () => {
+    NProgress.done()
+}
 
 class Page extends React.Component {
     static propTypes = {children: PropTypes.node}
