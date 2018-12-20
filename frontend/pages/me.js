@@ -1,14 +1,14 @@
 import React from "react"
 
-const Sell = () => {
+const Me = () => {
     return (
         <div>
-            <p>Sell!</p>
+            <p>Me!</p>
         </div>
     )
 }
 
-Sell.propTypes = {}
+Me.propTypes = {}
 
 // export
-export default Sell
+export default Me
