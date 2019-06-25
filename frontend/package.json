@@ -1,7 +1,7 @@
 {
-    "name": "<name>",
+    "name": "sick-fits",
     "version": "0.0.1",
-    "description": "<description>",
+    "description": "👟 sick fits - frontend",
     "keywords": [],
     "homepage": "<url>",
     "bugs": {
@@ -18,9 +18,16 @@
         "url": "https://github.com/bradgarropy/<repo>"
     },
     "scripts": {
-        "start": ""
+        "dev": "next",
+        "build": "next build",
+        "start": "next start"
     },
-    "dependencies": {},
+    "dependencies": {
+        "next": "^8.1.0",
+        "prop-types": "^15.7.2",
+        "react": "^16.8.6",
+        "react-dom": "^16.8.6"
+    },
     "devDependencies": {
         "babel-eslint": "^10.0.2",
         "eslint": "^5.16.0",
