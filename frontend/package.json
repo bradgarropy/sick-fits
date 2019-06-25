@@ -1,119 +1,33 @@
 {
-    "name": "sick-fits-frontend",
-    "version": "1.0.0",
-    "description": "Sick Fits! An example React, GraphQL, Next and Apollo",
-    "main": "index.js",
+    "name": "<name>",
+    "version": "0.0.1",
+    "description": "<description>",
+    "keywords": [],
+    "homepage": "<url>",
+    "bugs": {
+        "url": "https://github.com/bradgarropy/<repo>/issues"
+    },
+    "license": "MIT",
+    "author": {
+        "name": "Brad Garropy",
+        "email": "bradgarropy@gmail.com",
+        "url": "https://bradgarropy.com"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/bradgarropy/<repo>"
+    },
     "scripts": {
-        "dev": "next -p 7777",
-        "build": "next build",
-        "start": "next start",
-        "test": "NODE_ENV=test jest --watch",
-        "test-win": "SET NODE_ENV=test&& jest --watch",
-        "heroku-postbuild": "next build"
+        "start": ""
     },
-    "author": "",
-    "license": "ISC",
-    "dependencies": {
-        "apollo-boost": "^0.1.16",
-        "apollo-client": "^2.4.2",
-        "babel-core": "^7.0.0-bridge.0",
-        "babel-plugin-styled-components": "^1.10.0",
-        "date-fns": "^2.0.0-alpha.7",
-        "downshift": "^2.2.3",
-        "enzyme": "^3.6.0",
-        "enzyme-adapter-react-16": "^1.5.0",
-        "graphql": "^14.0.2",
-        "graphql-tag": "^2.9.2",
-        "lodash.debounce": "^4.0.8",
-        "next": "^7.0.0",
-        "next-with-apollo": "^3.1.3",
-        "nprogress": "^0.2.0",
-        "prop-types": "^15.6.2",
-        "react": "^16.5.2",
-        "react-adopt": "^0.6.0",
-        "react-apollo": "^2.2.1",
-        "react-dom": "^16.5.2",
-        "react-stripe-checkout": "^2.6.3",
-        "react-transition-group": "^2.5.0",
-        "styled-components": "^4.1.3",
-        "waait": "^1.0.2"
-    },
+    "dependencies": {},
     "devDependencies": {
-        "babel-eslint": "^10.0.1",
-        "babel-jest": "^23.6.0",
-        "babel-plugin-module-resolver": "^3.1.1",
-        "casual": "^1.5.19",
-        "enzyme-to-json": "^3.3.4",
-        "eslint": "^5.10.0",
-        "eslint-plugin-react": "^7.11.1",
-        "graphql-tools": "^4.0.0",
-        "jest": "^23.6.0",
-        "jest-transform-graphql": "^2.1.0"
+        "babel-eslint": "^10.0.2",
+        "eslint": "^5.16.0",
+        "eslint-config-bradgarropy": "^1.1.0",
+        "eslint-plugin-jsx-a11y": "^6.2.1",
+        "eslint-plugin-react": "^7.14.2",
+        "eslint-plugin-react-hooks": "^1.6.1"
     },
-    "jest": {
-        "setupTestFrameworkScriptFile": "<rootDir>/jest.setup.js",
-        "testPathIgnorePatterns": [
-            "<rootDir>/.next/",
-            "<rootDir>/node_modules/"
-        ],
-        "transform": {
-            "\\.(gql|graphql)$": "jest-transform-graphql",
-            ".*": "babel-jest",
-            "^.+\\.js?$": "babel-jest"
-        }
-    },
-    "//": "This is our babel config, I prefer this over a .babelrc file",
-    "babel": {
-        "env": {
-            "development": {
-                "presets": [
-                    "next/babel"
-                ],
-                "plugins": [
-                    [
-                        "styled-components",
-                        {
-                            "ssr": true,
-                            "displayName": true
-                        }
-                    ]
-                ]
-            },
-            "production": {
-                "presets": [
-                    "next/babel"
-                ],
-                "plugins": [
-                    [
-                        "styled-components",
-                        {
-                            "ssr": true,
-                            "displayName": true
-                        }
-                    ]
-                ]
-            },
-            "test": {
-                "presets": [
-                    [
-                        "next/babel",
-                        {
-                            "preset-env": {
-                                "modules": "commonjs"
-                            }
-                        }
-                    ]
-                ],
-                "plugins": [
-                    [
-                        "styled-components",
-                        {
-                            "ssr": true,
-                            "displayName": true
-                        }
-                    ]
-                ]
-            }
-        }
-    }
+    "peerDependencies": {}
 }
