@@ -24,13 +24,16 @@
     },
     "dependencies": {
         "next": "^8.1.0",
+        "nprogress": "^0.2.0",
         "prop-types": "^15.7.2",
         "react": "^16.8.6",
-        "react-dom": "^16.8.6"
+        "react-dom": "^16.8.6",
+        "styled-components": "^4.3.2"
     },
     "devDependencies": {
         "babel-eslint": "^10.0.2",
-        "eslint": "^5.16.0",
+        "babel-plugin-styled-components": "^1.10.2",
+        "eslint": "^6.0.1",
         "eslint-config-bradgarropy": "^1.1.0",
         "eslint-plugin-jsx-a11y": "^6.2.1",
         "eslint-plugin-react": "^7.14.2",
