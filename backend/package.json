@@ -18,9 +18,12 @@
         "url": "https://github.com/bradgarropy/<repo>"
     },
     "scripts": {
+        "dev": "node index.js",
         "deploy": "prisma deploy"
     },
     "dependencies": {
+        "apollo-server": "^2.6.7",
+        "graphql": "^14.3.1",
         "prisma": "^1.34.0"
     },
     "devDependencies": {
