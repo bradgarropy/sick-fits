@@ -18,9 +18,18 @@
         "url": "https://github.com/bradgarropy/<repo>"
     },
     "scripts": {
-        "start": ""
+        "deploy": "prisma deploy"
     },
-    "dependencies": {},
-    "devDependencies": {},
+    "dependencies": {
+        "prisma": "^1.34.0"
+    },
+    "devDependencies": {
+        "babel-eslint": "^10.0.1",
+        "eslint": "^5.15.3",
+        "eslint-config-bradgarropy": "^1.1.0",
+        "eslint-plugin-jsx-a11y": "^6.2.1",
+        "eslint-plugin-react": "^7.12.4",
+        "eslint-plugin-react-hooks": "^1.5.1"
+    },
     "peerDependencies": {}
 }
