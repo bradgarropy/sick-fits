@@ -1,11 +1,7 @@
-const fs = require("fs")
-const {ApolloServer, gql, makeExecutableSchema} = require("apollo-server")
-const Query = require("./Query")
-const Mutation = require("./Mutation")
-
-const typeDefs = gql`
-    ${fs.readFileSync("prisma/generated/prisma.graphql", "utf8")}
-`
+const {ApolloServer, makeExecutableSchema} = require("apollo-server")
+const typeDefs = require("./schema")
+const Query = require("./query")
+const Mutation = require("./mutation")
 
 const resolvers = {
     Query,

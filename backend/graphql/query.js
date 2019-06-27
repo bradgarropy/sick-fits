@@ -10,13 +10,7 @@ const users = [
 ]
 
 const Query = {
-    users: (parent, args, context, info) => {
-        console.log(parent)
-        console.log(args)
-        console.log(context)
-        console.log(info)
-        return users
-    },
+    users: () => users,
 }
 
 module.exports = Query
