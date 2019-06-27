@@ -1,0 +1,11 @@
+# import * from "../prisma/generated/prisma.graphql"
+
+type Query {
+    users: [User]!
+    items: [Item]!
+}
+
+type Mutation {
+    createUser(data: UserCreateInput!): User!
+    createItem(data: ItemCreateInput!): Item!
+}

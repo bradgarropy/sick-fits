@@ -1,7 +1,9 @@
 const {ApolloServer, makeExecutableSchema} = require("apollo-server")
-const typeDefs = require("./schema")
+const {importSchema} = require("graphql-import")
 const Query = require("./query")
 const Mutation = require("./mutation")
+
+const typeDefs = importSchema("graphql/schema.graphql")
 
 const resolvers = {
     Query,

@@ -1,16 +1,8 @@
-const users = [
-    {
-        name: "Brad Garropy",
-        email: "bradgarropy@gmail.com",
-    },
-    {
-        name: "Gaby Garropy",
-        email: "gabrielagarropy@gmail.com",
-    },
-]
+const database = require("../prisma/database")
 
 const Query = {
-    users: () => users,
+    users: () => database.query.users(),
+    items: () => database.query.items(),
 }
 
 module.exports = Query
