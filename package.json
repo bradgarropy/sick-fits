@@ -3,9 +3,9 @@
     "version": "0.0.1",
     "description": "👟 sick fits",
     "keywords": [],
-    "homepage": "<url>",
+    "homepage": "https://github.com/bradgarropy/sick-fits",
     "bugs": {
-        "url": "https://github.com/bradgarropy/<repo>/issues"
+        "url": "https://github.com/bradgarropy/sick-fits/issues"
     },
     "license": "MIT",
     "author": {
@@ -15,18 +15,17 @@
     },
     "repository": {
         "type": "git",
-        "url": "https://github.com/bradgarropy/<repo>"
+        "url": "https://github.com/bradgarropy/sick-fits"
     },
-    "scripts": {
-        "dev": "next",
-        "build": "next build",
-        "start": "next start"
+    "scripts": {},
+    "dependencies": {},
+    "devDependencies": {
+        "babel-eslint": "^10.0.1",
+        "eslint": "^5.15.3",
+        "eslint-config-bradgarropy": "^1.1.0",
+        "eslint-plugin-jsx-a11y": "^6.2.1",
+        "eslint-plugin-react": "^7.12.4",
+        "eslint-plugin-react-hooks": "^1.5.1"
     },
-    "dependencies": {
-        "next": "^8.1.0",
-        "react": "^16.8.6",
-        "react-dom": "^16.8.6"
-    },
-    "devDependencies": {},
     "peerDependencies": {}
 }
