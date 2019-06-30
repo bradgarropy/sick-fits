@@ -1,9 +1,10 @@
 import React from "react"
+import Items from "../components/Items"
 
 const IndexPage = () => {
     return (
         <>
-            <h1>Home</h1>
+            <Items/>
         </>
     )
 }

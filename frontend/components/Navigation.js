@@ -5,8 +5,8 @@ import NavigationWrapper from "../styles/Navigation"
 const Navigation = () => {
     return (
         <NavigationWrapper>
-            <Link href="/items">
-                <a>Items</a>
+            <Link href="/shop">
+                <a>Shop</a>
             </Link>
 
             <Link href="/sell">
