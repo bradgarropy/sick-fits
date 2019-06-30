@@ -5,8 +5,8 @@ import styled from "styled-components"
 import Item from "./Item"
 import {Center} from "../styles"
 
-const GET_ITEMS = gql`
-    {
+const READ_ITEMS_QUERY = gql`
+    query READ_ITEMS_QUERY {
         items {
             id
             title
@@ -29,7 +29,7 @@ const ItemList = styled.div`
 const Items = () => {
     return (
         <Center>
-            <Query query={GET_ITEMS}>
+            <Query query={READ_ITEMS_QUERY}>
                 {({loading, error, data}) => {
                     if (loading) return <p>Loading...</p>
                     if (error) return <p>Error: {error.message}</p>
@@ -48,3 +48,4 @@ const Items = () => {
 }
 
 export default Items
+export {READ_ITEMS_QUERY}
