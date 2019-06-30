@@ -1,10 +1,9 @@
 import React from "react"
+import ItemForm from "../components/ItemForm"
 
 const SellPage = () => {
     return (
-        <>
-            <h1>Sell</h1>
-        </>
+        <ItemForm/>
     )
 }
 
