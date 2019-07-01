@@ -29,31 +29,68 @@ const ItemForm = () => {
     const [title, setTitle] = useState("")
     const [description, setDescription] = useState("")
     const [price, setPrice] = useState(0)
+    const [image, setImage] = useState("")
+    const [largeImage, setLargeImage] = useState("")
 
     return (
         <Mutation mutation={CREATE_ITEM_MUTATION}>
             {(createItem, {loading, error}) => {
+                const onSubmit = async event => {
+                    event.preventDefault()
+
+                    const response = await createItem({
+                        variables: {
+                            title,
+                            description,
+                            price
+                        }
+                    })
+
+                    const {id} = response.data.createItem
+                    Router.push(`/item?id=${id}`)
+                }
+
+                const uploadFile = async event => {
+                    const file = event.target.files[0]
+                    const data = new FormData()
+
+                    data.append("file", file)
+                    data.append("upload_preset", "sick-fits")
+
+                    const response = await fetch(
+                        "https://api.cloudinary.com/v1_1/bradgarropy/image/upload",
+                        {method: "POST", body: data}
+                    )
+
+                    const images = await response.json()
+                    const image = images.url
+                    const largeImage = images.eager[0].url
+
+                    setImage(image)
+                    setLargeImage(largeImage)
+                }
+
                 return (
-                    <Form onSubmit={async event => {
-                        event.preventDefault()
-
-                        const response = await createItem({
-                            variables: {
-                                title,
-                                description,
-                                price
-                            }
-                        })
-
-                        const {id} = response.data.createItem
-                        Router.push(`/item?id=${id}`)
-
-                    }}>
+                    <Form onSubmit={onSubmit}>
                         <h2>Sell something!</h2>
 
                         <Error error={error}/>
 
                         <fieldset disabled={loading} aria-busy={loading}>
+                        <label htmlFor="image">
+                                Title
+                                <input
+                                    type="file"
+                                    id="image"
+                                    name="image"
+                                    placeholder="Upload an image"
+                                    onChange={uploadFile}
+                                    required
+                                    />
+
+                                {image && <img src={image} alt="upload preview" width="200"/>}
+                            </label>
+
                             <label htmlFor="title">
                                 Title
                                 <input
