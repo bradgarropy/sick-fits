@@ -1,9 +1,9 @@
 import React from "react"
-import ItemForm from "../components/ItemForm"
+import CreateItem from "../components/CreateItem"
 
 const SellPage = () => {
     return (
-        <ItemForm/>
+        <CreateItem/>
     )
 }
 

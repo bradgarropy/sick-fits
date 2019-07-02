@@ -3,7 +3,7 @@ import {useState} from "react"
 import {Mutation} from "react-apollo"
 import {gql} from "apollo-boost"
 import Router from "next/router"
-import Error from "../components/Error"
+import Error from "./Error"
 import {Form} from "../styles"
 
 const CREATE_ITEM_MUTATION = gql`
@@ -25,7 +25,7 @@ const CREATE_ITEM_MUTATION = gql`
     }
 `
 
-const ItemForm = () => {
+const CreateItem = () => {
     const [title, setTitle] = useState("")
     const [description, setDescription] = useState("")
     const [price, setPrice] = useState(0)
@@ -138,5 +138,5 @@ const ItemForm = () => {
     )
 }
 
-export default ItemForm
+export default CreateItem
 export {CREATE_ITEM_MUTATION}
