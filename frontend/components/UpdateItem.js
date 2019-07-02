@@ -2,7 +2,6 @@ import React from "react"
 import {useState, useEffect} from "react"
 import {Query, Mutation} from "react-apollo"
 import {gql} from "apollo-boost"
-import Router from "next/router"
 import {withRouter} from "next/router"
 import Error from "./Error"
 import {Form} from "../styles"
@@ -75,8 +74,6 @@ const UpdateItem = ({router}) => {
                                         ...updates
                                     }
                                 })
-
-                                Router.push(`/item?id=${response.data.updateItem.id}`)
                             }
 
                             return (
@@ -124,7 +121,9 @@ const UpdateItem = ({router}) => {
                                                 />
                                         </label>
 
-                                        <button type="submit">Save</button>
+                                        <button type="submit">
+                                            {loading ? "Saving" : "Save"}
+                                        </button>
                                     </fieldset>
                                 </Form>
                             )
