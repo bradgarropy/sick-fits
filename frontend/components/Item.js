@@ -2,6 +2,7 @@ import React from "react"
 import PropTypes from "prop-types"
 import Link from "next/link"
 import format from "../utils/money"
+import DeleteItem from "./DeleteItem"
 import {ItemWrapper, ItemTitle, ItemButtons, PriceTag} from "../styles"
 
 const Item = ({item}) => {
@@ -27,7 +28,7 @@ const Item = ({item}) => {
                 </Link>
 
                 <button>Add To Cart 🛒</button>
-                <button>Delete ❌</button>
+                <DeleteItem>Delete ❌</DeleteItem>
             </ItemButtons>
         </ItemWrapper>
     )
