@@ -3,9 +3,11 @@
 type Query {
     users: [User]!
     items: [Item]!
+    item(where: ItemWhereUniqueInput!): Item
 }
 
 type Mutation {
     createUser(data: UserCreateInput!): User!
     createItem(data: ItemCreateInput!): Item!
+    updateItem(data: ItemUpdateInput!, where: ItemWhereUniqueInput!): Item
 }
