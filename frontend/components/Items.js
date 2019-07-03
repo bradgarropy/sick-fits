@@ -4,6 +4,7 @@ import {gql} from "apollo-boost"
 import styled from "styled-components"
 import Item from "./Item"
 import {Center} from "../styles"
+import Error from "./Error"
 
 const READ_ITEMS_QUERY = gql`
     query READ_ITEMS_QUERY {
@@ -32,7 +33,7 @@ const Items = () => {
             <Query query={READ_ITEMS_QUERY}>
                 {({loading, error, data}) => {
                     if (loading) return <p>Loading...</p>
-                    if (error) return <p>Error: {error.message}</p>
+                    if (error) return <Error error={error}/>
 
                     const {items} = data
 

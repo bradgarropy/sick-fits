@@ -48,7 +48,7 @@ const UpdateItem = ({router}) => {
         <Query query={READ_ITEM_QUERY} variables={{id}}>
             {({loading, error, data}) => {
                 if (loading) return <p>Loading...</p>
-                if (error) return <p>Error: {error.message}</p>
+                if (error) return <Error error={error}/>
 
                 const {item} = data
 
