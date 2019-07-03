@@ -11,16 +11,22 @@ const CREATE_ITEM_MUTATION = gql`
         $title: String!
         $description: String!
         $price: Int!
+        $image: String!
+        $largeImage: String!
     ) {
         createItem(data: {
             title: $title
             description: $description
             price: $price
+            image: $image
+            largeImage: $largeImage
         }) {
             id
             title
             description
             price
+            image
+            largeImage
         }
     }
 `
@@ -38,11 +44,19 @@ const CreateItem = () => {
                 const onSubmit = async event => {
                     event.preventDefault()
 
+                    console.log(title)
+                    console.log(description)
+                    console.log(price)
+                    console.log(image)
+                    console.log(largeImage)
+
                     const response = await createItem({
                         variables: {
                             title,
                             description,
-                            price
+                            price,
+                            image,
+                            largeImage,
                         }
                     })
 
@@ -78,7 +92,7 @@ const CreateItem = () => {
 
                         <fieldset disabled={loading} aria-busy={loading}>
                         <label htmlFor="image">
-                                Title
+                                Image
                                 <input
                                     type="file"
                                     id="image"
