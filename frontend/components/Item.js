@@ -28,7 +28,7 @@ const Item = ({item}) => {
                 </Link>
 
                 <button>Add To Cart 🛒</button>
-                <DeleteItem>Delete ❌</DeleteItem>
+                <DeleteItem id={id}>Delete ❌</DeleteItem>
             </ItemButtons>
         </ItemWrapper>
     )
