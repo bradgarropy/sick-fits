@@ -4,6 +4,7 @@ type Query {
     users: [User]!
     items: [Item]!
     item(where: ItemWhereUniqueInput!): Item
+    itemsConnection(where: ItemWhereInput): ItemConnection!
 }
 
 type Mutation {

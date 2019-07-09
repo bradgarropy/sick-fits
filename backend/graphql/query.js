@@ -1,9 +1,10 @@
-const database = require("../prisma/database")
+const {forwardTo} = require("prisma-binding")
 
 const Query = {
-    users: () => database.query.users(),
-    items: () => database.query.items(),
-    item: (parent, {where}) => database.query.item({where}),
+    users: forwardTo("database"),
+    items: forwardTo("database"),
+    item: forwardTo("database"),
+    itemsConnection: forwardTo("database"),
 }
 
 module.exports = Query
