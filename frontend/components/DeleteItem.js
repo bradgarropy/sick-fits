@@ -22,7 +22,7 @@ const DeleteItem = ({children, id}) => {
     return (
         <Mutation mutation={DELETE_ITEM_MUTATION} update={update}>
             {(deleteItem, {loading, error}) => {
-                const onClick = async () => {
+                const onClick = async() => {
                     if(confirm("Are you sure you want to delete this item?")) {
                         deleteItem({variables: {id}})
                     }

@@ -22,7 +22,7 @@
         "deploy": "prisma deploy"
     },
     "dependencies": {
-        "apollo-server": "^2.6.7",
+        "apollo-server": "^2.6.8",
         "dotenv": "^8.0.0",
         "graphql": "^14.4.2",
         "graphql-import": "^0.7.1",

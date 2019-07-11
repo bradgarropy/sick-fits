@@ -5,6 +5,7 @@ import styled from "styled-components"
 import Item from "./Item"
 import {Center} from "../styles"
 import Error from "./Error"
+import Pagination from "./Pagination"
 
 const READ_ITEMS_QUERY = gql`
     query READ_ITEMS_QUERY {
@@ -30,6 +31,7 @@ const ItemList = styled.div`
 const Items = () => {
     return (
         <Center>
+            <Pagination/>
             <Query query={READ_ITEMS_QUERY}>
                 {({loading, error, data}) => {
                     if (loading) return <p>Loading...</p>
@@ -44,6 +46,7 @@ const Items = () => {
                     )
                 }}
             </Query>
+            <Pagination/>
         </Center>
     )
 }

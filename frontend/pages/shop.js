@@ -1,9 +1,10 @@
 import React from "react"
+import Items from "../components/Items"
 
 const ShopPage = () => {
     return (
         <>
-            <h1>Shop</h1>
+            <Items/>
         </>
     )
 }

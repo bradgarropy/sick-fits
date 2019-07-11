@@ -44,12 +44,6 @@ const CreateItem = () => {
                 const onSubmit = async event => {
                     event.preventDefault()
 
-                    console.log(title)
-                    console.log(description)
-                    console.log(price)
-                    console.log(image)
-                    console.log(largeImage)
-
                     const response = await createItem({
                         variables: {
                             title,
