@@ -2,7 +2,12 @@
 
 type Query {
     users: [User]!
-    items: [Item]!
+    items(
+        where: ItemWhereInput
+        orderBy: ItemOrderByInput
+        skip: Int
+        first: Int
+    ): [Item]!
     item(where: ItemWhereUniqueInput!): Item
     itemsConnection(where: ItemWhereInput): ItemConnection!
 }

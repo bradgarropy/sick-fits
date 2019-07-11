@@ -68,6 +68,7 @@ const Pagination = ({router}) => {
                         </Link>
 
                         <p>Page {page} of {pages}</p>
+                        <p>{count} Items</p>
 
                         <Link prefetch href={`/shop?page=${page + 1}`}>
                             <a aria-disabled={page >= pages}>Next 👉🏼</a>
