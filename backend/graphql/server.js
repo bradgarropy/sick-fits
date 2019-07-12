@@ -1,4 +1,5 @@
-const {ApolloServer, makeExecutableSchema} = require("apollo-server")
+const express = require("express");
+const {ApolloServer, makeExecutableSchema} = require("apollo-server-express")
 const {importSchema} = require("graphql-import")
 const Query = require("./query")
 const Mutation = require("./mutation")
@@ -19,9 +20,12 @@ const schema = makeExecutableSchema({
     },
 })
 
-const server = new ApolloServer({
+const apolloServer = new ApolloServer({
     schema,
     context: ({req}) => ({...req, database}),
 })
+
+const server = express();
+apolloServer.applyMiddleware({app: server});
 
 module.exports = server

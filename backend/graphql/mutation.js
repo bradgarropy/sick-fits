@@ -5,6 +5,9 @@ const Mutation = {
     createItem: (parent, {data}) => database.mutation.createItem({data}),
     updateItem: (parent, {data, where}) => database.mutation.updateItem({data, where}),
     deleteItem: (parent, {where}) => database.mutation.deleteItem({where}),
+    // signup: (parent, args) => {
+    //     console.log(args)
+    // },
 }
 
 module.exports = Mutation
