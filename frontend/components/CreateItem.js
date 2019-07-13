@@ -79,7 +79,7 @@ const CreateItem = () => {
                 }
 
                 return (
-                    <Form onSubmit={onSubmit}>
+                    <Form method="post" onSubmit={onSubmit}>
                         <h2>Sell something!</h2>
 
                         <Error error={error}/>
