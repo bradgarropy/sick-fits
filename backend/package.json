@@ -22,8 +22,8 @@
         "deploy": "prisma deploy"
     },
     "dependencies": {
-        "apollo-server": "^2.6.8",
-        "apollo-server-express": "^2.6.9",
+        "apollo-server": "^2.7.0",
+        "apollo-server-express": "^2.7.0",
         "bcryptjs": "^2.4.3",
         "cookie-parser": "^1.4.4",
         "cors": "^2.8.5",
@@ -32,12 +32,12 @@
         "graphql": "^14.4.2",
         "graphql-import": "^0.7.1",
         "jsonwebtoken": "^8.5.1",
-        "prisma": "^1.34.1",
+        "prisma": "^1.34.2",
         "prisma-binding": "^2.3.15"
     },
     "devDependencies": {
         "babel-eslint": "^10.0.2",
-        "eslint": "^6.0.1",
+        "eslint": "^6.1.0",
         "eslint-config-bradgarropy": "^1.1.0",
         "eslint-plugin-jsx-a11y": "^6.2.3",
         "eslint-plugin-react": "^7.14.2",

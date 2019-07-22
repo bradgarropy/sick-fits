@@ -7,7 +7,7 @@ const Mutation = {
     createItem: (parent, {data}) => database.mutation.createItem({data}),
     updateItem: (parent, {data, where}) => database.mutation.updateItem({data, where}),
     deleteItem: (parent, {where}) => database.mutation.deleteItem({where}),
-    signup: async (parent, args, context) => {
+    signup: async (parent, args, context, info) => {
         args.email = args.email.toLowerCase()
         args.password = await bcrypt.hash(args.password, 10)
 
@@ -16,7 +16,7 @@ const Mutation = {
                 ...args,
                 permissions: {set: ["USER"]}
             }
-        })
+        }, info)
 
         const token = jwt.sign({id: user.id}, process.env.SECRET)
         context.res.cookie("token", token, {

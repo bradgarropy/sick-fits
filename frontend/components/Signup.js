@@ -61,6 +61,7 @@ const Signup = (props) => {
                                     type="text"
                                     name="name"
                                     placeholder="name"
+                                    autoComplete="name"
                                     value={name}
                                     onChange={event => setName(event.target.value)}/>
                             </label>
@@ -71,6 +72,7 @@ const Signup = (props) => {
                                     type="email"
                                     name="email"
                                     placeholder="email"
+                                    autoComplete="email"
                                     value={email}
                                     onChange={event => setEmail(event.target.value)}/>
                             </label>
@@ -81,6 +83,7 @@ const Signup = (props) => {
                                     type="password"
                                     name="password"
                                     placeholder="password"
+                                    autoComplete="new-password"
                                     value={password}
                                     onChange={event => setPassword(event.target.value)}/>
                             </label>
