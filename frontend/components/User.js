@@ -18,7 +18,6 @@ const User = (props) => {
     return (
         <Query query={READ_USER_QUERY}>
             {(data, loading, error) => {
-                console.log(data)
                 return null
             }}
         </Query>
