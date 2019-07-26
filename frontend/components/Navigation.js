@@ -1,19 +1,10 @@
 import React from "react"
 import Link from "next/link"
 import NavigationWrapper from "../styles/Navigation"
-import User from "./User"
 
 const Navigation = () => {
     return (
         <NavigationWrapper>
-            <User>
-                {/* {(payload) => {
-                    return (
-                        <p>User</p>
-                    )
-                }} */}
-            </User>
-
             <Link href="/shop">
                 <a>Shop</a>
             </Link>
