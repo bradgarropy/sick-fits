@@ -1,5 +1,4 @@
 import React from "react"
-import PropTypes from "prop-types"
 import {Query} from "react-apollo"
 import {gql} from "apollo-boost"
 
@@ -14,18 +13,15 @@ const READ_USER_QUERY = gql`
     }
 `
 
-const User = (props) => {
+const User = () => {
     return (
         <Query query={READ_USER_QUERY}>
-            {(data, loading, error) => {
-                console.log("me: ", data.me)
-                return null
+            {({data, loading, error}) => {
+                return (<p>{JSON.stringify(data.me)}</p>)
             }}
         </Query>
     )
 }
-
-User.propTypes = {}
 
 export default User
 export {READ_USER_QUERY}

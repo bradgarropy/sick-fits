@@ -19,12 +19,10 @@ server.use(cors(options))
 server.use(cookieParser())
 server.use("*", (req, res, next) => {
     const {token} = req.cookies
-    console.log("token: ", token)
 
     if (token) {
         const {id} = jwt.verify(token, process.env.SECRET)
         req.id = id
-        console.log("req.id: ", req.id)
     }
 
     next()
