@@ -48,6 +48,11 @@ const Mutation = {
 
         return user
     },
+    signout: (parent, args, context, info) => {
+        context.res.clearCookie("token")
+        const message = {message: "Goodbye!"}
+        return message
+    },
 }
 
 module.exports = Mutation

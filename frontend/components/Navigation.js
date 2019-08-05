@@ -2,6 +2,7 @@ import React from "react"
 import Link from "next/link"
 import User from "./User"
 import NavigationWrapper from "../styles/Navigation"
+import Signout from "./Signout"
 
 const Navigation = () => {
     return (
@@ -28,6 +29,8 @@ const Navigation = () => {
                                 <Link href="/me">
                                     <a>Account</a>
                                 </Link>
+
+                                <Signout/>
                             </>
                         )}
 

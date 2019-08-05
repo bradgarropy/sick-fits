@@ -27,6 +27,10 @@ const GlobalStyles = createGlobalStyle`
         font-family: "radnika_next";
     }
 
+    button {
+        font-family: "radnika_next";
+    }
+
     a {
         text-decoration: none;
         color: ${({theme}) => theme.black};
