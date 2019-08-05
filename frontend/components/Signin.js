@@ -6,14 +6,12 @@ import {Form} from "../styles"
 import Error from "./Error"
 import {READ_USER_QUERY} from "./User"
 
-const SIGNUP_MUTATION = gql`
-    mutation SIGNUP_MUTATION(
-        $name: String!
+const SIGNIN_MUTATION = gql`
+    mutation SIGNIN_MUTATION(
         $email: String!
         $password: String!
     ) {
-        signup(
-            name: $name
+        signin(
             email: $email
             password: $password
         ) {
@@ -24,29 +22,26 @@ const SIGNUP_MUTATION = gql`
     }
 `
 
-const Signup = () => {
-    const [name, setName] = useState("")
+const Signin = () => {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
 
     return (
         <Mutation
-            mutation={SIGNUP_MUTATION}
+            mutation={SIGNIN_MUTATION}
             refetchQueries={[{query: READ_USER_QUERY}]}
         >
-            {(signup, {loading, error}) => {
+            {(signin, {loading, error}) => {
                 const onSubmit = async event => {
                     event.preventDefault()
 
-                    await signup({
+                    await signin({
                         variables: {
-                            name,
                             email,
                             password
                         }
                     })
 
-                    setName("")
                     setEmail("")
                     setPassword("")
                 }
@@ -54,20 +49,9 @@ const Signup = () => {
                 return (
                     <Form method="post" onSubmit={onSubmit}>
                         <fieldset disabled={loading} aria-busy={loading}>
-                            <h2>Sign up for an account!</h2>
+                            <h2>Sign in to your account!</h2>
 
                             <Error error={error}/>
-
-                            <label htmlFor="name">
-                                Name
-                                <input
-                                    type="text"
-                                    name="name"
-                                    placeholder="name"
-                                    autoComplete="name"
-                                    value={name}
-                                    onChange={event => setName(event.target.value)}/>
-                            </label>
 
                             <label htmlFor="email">
                                 Email
@@ -86,12 +70,12 @@ const Signup = () => {
                                     type="password"
                                     name="password"
                                     placeholder="password"
-                                    autoComplete="new-password"
+                                    autoComplete="current-password"
                                     value={password}
                                     onChange={event => setPassword(event.target.value)}/>
                             </label>
 
-                            <button type="submit">Sign Up!</button>
+                            <button type="submit">Sign In!</button>
                         </fieldset>
                     </Form>
                 )
@@ -100,4 +84,4 @@ const Signup = () => {
     )
 }
 
-export default Signup
+export default Signin

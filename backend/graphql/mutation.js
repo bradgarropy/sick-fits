@@ -26,6 +26,28 @@ const Mutation = {
 
         return user
     },
+    signin: async (parent, args, context, info) => {
+        const {email, password} = args
+        const user = await database.query.user({where: {email}})
+
+        if(!user) {
+            throw new Error(`No user with email ${email}!`)
+        }
+
+        const valid = await bcrypt.compare(password, user.password)
+
+        if(!valid) {
+            throw new Error("Invalid password!")
+        }
+
+        const token = jwt.sign({id: user.id}, process.env.SECRET)
+        context.res.cookie("token", token, {
+            httpOnly: true,
+            maxAge: 1000 * 60 * 60 * 24 * 365,
+        })
+
+        return user
+    },
 }
 
 module.exports = Mutation

@@ -5,39 +5,41 @@ import NavigationWrapper from "../styles/Navigation"
 
 const Navigation = () => {
     return (
-        <NavigationWrapper>
-            <User>
-                {({data}) => {
-                    const {me} = data
+        <User>
+            {({data}) => {
+                const {me} = data
 
-                    if(!me) {
-                        return null
-                    }
+                return (
+                    <NavigationWrapper>
+                        <Link href="/shop">
+                            <a>Shop</a>
+                        </Link>
 
-                    return (<p>{me.name}</p>)
-                }}
-            </User>
+                        {me && (
+                            <>
+                                <Link href="/sell">
+                                    <a>Sell</a>
+                                </Link>
 
-            <Link href="/shop">
-                <a>Shop</a>
-            </Link>
+                                <Link href="/orders">
+                                    <a>Orders</a>
+                                </Link>
 
-            <Link href="/sell">
-                <a>Sell</a>
-            </Link>
+                                <Link href="/me">
+                                    <a>Account</a>
+                                </Link>
+                            </>
+                        )}
 
-            <Link href="/signup">
-                <a>Signup</a>
-            </Link>
-
-            <Link href="/orders">
-                <a>Orders</a>
-            </Link>
-
-            <Link href="/me">
-                <a>Account</a>
-            </Link>
-        </NavigationWrapper>
+                        {!me && (
+                            <Link href="/signup">
+                                <a>Signup</a>
+                            </Link>
+                        )}
+                    </NavigationWrapper>
+                )
+            }}
+        </User>
     )
 }
 

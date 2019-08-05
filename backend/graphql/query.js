@@ -13,7 +13,7 @@ const Query = {
             return null
         }
 
-        const user = await database.query.user({where: {id: id}}, info)
+        const user = await database.query.user({where: {id}}, info)
         return user
     },
 }
