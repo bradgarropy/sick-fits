@@ -1,10 +1,23 @@
 import React from "react"
 import Link from "next/link"
+import User from "./User"
 import NavigationWrapper from "../styles/Navigation"
 
 const Navigation = () => {
     return (
         <NavigationWrapper>
+            <User>
+                {({data}) => {
+                    const {me} = data
+
+                    if(!me) {
+                        return null
+                    }
+
+                    return (<p>{me.name}</p>)
+                }}
+            </User>
+
             <Link href="/shop">
                 <a>Shop</a>
             </Link>
