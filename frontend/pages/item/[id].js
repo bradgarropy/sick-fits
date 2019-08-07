@@ -1,5 +1,5 @@
 import React from "react"
-import GetItem from "../components/GetItem"
+import GetItem from "../../components/GetItem"
 
 const ItemPage = () => {
     return (

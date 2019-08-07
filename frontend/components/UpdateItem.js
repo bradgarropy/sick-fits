@@ -1,8 +1,8 @@
 import React from "react"
-import {useState, useEffect} from "react"
+import {useState} from "react"
 import {Query, Mutation} from "react-apollo"
 import {gql} from "apollo-boost"
-import {withRouter} from "next/router"
+import {useRouter} from "next/router"
 import Error from "./Error"
 import {Form} from "../styles"
 
@@ -40,7 +40,8 @@ const UPDATE_ITEM_MUTATION = gql`
     }
 `
 
-const UpdateItem = ({router}) => {
+const UpdateItem = () => {
+    const router = useRouter()
     const {id} = router.query
     const [updates, setUpdates] = useState({})
 
@@ -135,5 +136,5 @@ const UpdateItem = ({router}) => {
     )
 }
 
-export default withRouter(UpdateItem)
+export default UpdateItem
 export {UPDATE_ITEM_MUTATION}

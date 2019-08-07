@@ -1,11 +1,10 @@
 import React from "react"
-import PropTypes from "prop-types"
 import Link from "next/link"
 import styled from "styled-components"
 import {gql} from "apollo-boost"
 import {Query} from "react-apollo"
 import Head from "next/head"
-import {withRouter} from "next/router"
+import {useRouter} from "next/router"
 import Error from "./Error"
 
 const PAGINATION_QUERY = gql`
@@ -45,8 +44,11 @@ const PaginationWrapper = styled.div`
     }
 `
 
-const Pagination = ({router}) => {
-    const page = parseInt(router.query.page) || 1
+const Pagination = () => {
+    const router = useRouter()
+    const page = Object.keys(router.query).length > 0
+        ? parseInt(router.query.page)
+        : 1
 
     return (
         <Query query={PAGINATION_QUERY}>
@@ -63,14 +65,14 @@ const Pagination = ({router}) => {
                             <title>Sick Fits! | Page {page} of {pages}</title>
                         </Head>
 
-                        <Link prefetch href={`/shop?page=${page - 1}`}>
+                        <Link prefetch href={`/shop/page/${page - 1}`}>
                             <a aria-disabled={page <= 1}>👈🏼 Prev</a>
                         </Link>
 
                         <p>Page {page} of {pages}</p>
                         <p>{count} Items</p>
 
-                        <Link prefetch href={`/shop?page=${page + 1}`}>
+                        <Link prefetch href={`/shop/page/${page + 1}`}>
                             <a aria-disabled={page >= pages}>Next 👉🏼</a>
                         </Link>
                     </PaginationWrapper>
@@ -84,4 +86,4 @@ Pagination.propTypes = {
 
 }
 
-export default withRouter(Pagination)
+export default Pagination

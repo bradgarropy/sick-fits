@@ -2,7 +2,7 @@ import React from "react"
 import {Query} from "react-apollo"
 import {gql} from "apollo-boost"
 import styled from "styled-components"
-import {withRouter} from "next/router"
+import {useRouter} from "next/router"
 import Item from "./Item"
 import {Center} from "../styles"
 import Error from "./Error"
@@ -36,8 +36,9 @@ const ItemList = styled.div`
     margin: 0 auto;
 `
 
-const Items = ({router}) => {
-    const page = parseInt(router.query.page) || 1
+const Items = () => {
+    const router = useRouter()
+    const {page} = router.query || 1
 
     return (
         <Center>
@@ -64,5 +65,5 @@ const Items = ({router}) => {
     )
 }
 
-export default withRouter(Items)
+export default Items
 export {READ_ITEMS_QUERY}

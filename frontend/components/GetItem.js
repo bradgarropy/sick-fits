@@ -1,8 +1,7 @@
 import React from "react"
-import PropTypes from "prop-types"
 import {Query} from "react-apollo"
 import {gql} from "apollo-boost"
-import {withRouter} from "next/router"
+import {useRouter} from "next/router"
 import styled from "styled-components"
 import Error from "./Error"
 import Head from "next/head"
@@ -40,7 +39,8 @@ const READ_ITEM_QUERY = gql`
     }
 `
 
-const GetItem = ({router}) => {
+const GetItem = () => {
+    const router = useRouter()
     const {id} = router.query
 
     return (
@@ -75,4 +75,4 @@ GetItem.propTypes = {
 
 }
 
-export default withRouter(GetItem)
+export default GetItem

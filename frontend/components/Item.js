@@ -13,7 +13,7 @@ const Item = ({item}) => {
             {image && <img src={image} alt={title}/>}
 
             <ItemTitle>
-                <Link href={`/item?id=${id}`}>
+                <Link href={`/item/${id}`}>
                     <a>{title}</a>
                 </Link>
             </ItemTitle>
@@ -23,7 +23,7 @@ const Item = ({item}) => {
             <p>{description}</p>
 
             <ItemButtons>
-                <Link href={`/update?id=${id}`}>
+                <Link href={`/update/${id}`}>
                     <a>Edit ✍🏼</a>
                 </Link>
 
