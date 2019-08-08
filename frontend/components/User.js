@@ -1,6 +1,6 @@
 import React from "react"
 import PropTypes from "prop-types"
-import {Query} from "react-apollo"
+import {useQuery} from "@apollo/react-hooks"
 import {gql} from "apollo-boost"
 
 const READ_USER_QUERY = gql`
@@ -14,11 +14,10 @@ const READ_USER_QUERY = gql`
     }
 `
 
-const User = props => (
-    <Query {...props} query={READ_USER_QUERY}>
-        {payload => props.children(payload)}
-    </Query>
-)
+const User = props => {
+    const {data} = useQuery(READ_USER_QUERY)
+    return <>{props.children(data, {...props})}</>
+}
 
 User.propTypes = {
     children: PropTypes.func.isRequired,

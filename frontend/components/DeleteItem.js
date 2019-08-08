@@ -1,6 +1,6 @@
 import React from "react"
 import PropTypes from "prop-types"
-import {Mutation} from "react-apollo"
+import {useMutation} from "@apollo/react-hooks"
 import {gql} from "apollo-boost"
 import {READ_ITEMS_QUERY} from "./Items"
 
@@ -19,25 +19,20 @@ const DeleteItem = ({children, id}) => {
         cache.writeQuery({query: READ_ITEMS_QUERY, data})
     }
 
-    return (
-        <Mutation mutation={DELETE_ITEM_MUTATION} update={update}>
-            {(deleteItem, {loading, error}) => {
-                const onClick = async() => {
-                    if(confirm("Are you sure you want to delete this item?")) {
-                        deleteItem({variables: {id}})
-                    }
-                }
+    const [deleteItem] = useMutation(DELETE_ITEM_MUTATION)
 
-                return (
-                    <button onClick={onClick}>{children}</button>
-                )
-            }}
-        </Mutation>
-    )
+    const onClick = async() => {
+        if (confirm("Are you sure you want to delete this item?")) {
+            deleteItem({variables: {id}})
+        }
+    }
+
+    return <button onClick={onClick}>{children}</button>
 }
 
 DeleteItem.propTypes = {
     children: PropTypes.node,
+    id: PropTypes.string.isRequired,
 }
 
 export default DeleteItem

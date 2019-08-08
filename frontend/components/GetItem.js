@@ -1,5 +1,5 @@
 import React from "react"
-import {Query} from "react-apollo"
+import {useQuery} from "@apollo/react-hooks"
 import {gql} from "apollo-boost"
 import {useRouter} from "next/router"
 import styled from "styled-components"
@@ -43,36 +43,37 @@ const GetItem = () => {
     const router = useRouter()
     const {id} = router.query
 
+    const {loading, error, data} = useQuery(READ_ITEM_QUERY, {variables: {id}})
+
+    if (loading) {
+        return <p>Loading...</p>
+    }
+
+    if (error) {
+        return <Error error={error}/>
+    }
+
+    const {item} = data
+
+    if (!item) {
+        return <p>No item found for {id}</p>
+    }
+
     return (
-        <Query query={READ_ITEM_QUERY} variables={{id}}>
-            {({loading, error, data}) => {
-                const {item} = data
-                if (loading) return <p>Loading...</p>
-                if (error) return <Error error={error}/>
-                if (!item) return <p>No item found for {id}</p>
+        <>
+            <Head>
+                <title>Sick Fits | {item.title}</title>
+            </Head>
 
-                return (
-                    <>
-                        <Head>
-                            <title>Sick Fits | {item.title}</title>
-                        </Head>
-
-                        <ItemWrapper>
-                            <img src={item.largeImage} alt={item.title}/>
-                            <div className="details">
-                                <h2>Viewing {item.title}</h2>
-                                <p>{item.description}</p>
-                            </div>
-                        </ItemWrapper>
-                    </>
-                )
-            }}
-        </Query>
+            <ItemWrapper>
+                <img src={item.largeImage} alt={item.title}/>
+                <div className="details">
+                    <h2>Viewing {item.title}</h2>
+                    <p>{item.description}</p>
+                </div>
+            </ItemWrapper>
+        </>
     )
-}
-
-GetItem.propTypes = {
-
 }
 
 export default GetItem

@@ -1,5 +1,5 @@
 import React from "react"
-import {Mutation} from "react-apollo"
+import {useMutation} from "@apollo/react-hooks"
 import {gql} from "apollo-boost"
 import {READ_USER_QUERY} from "./User"
 
@@ -12,18 +12,11 @@ const SIGNOUT_MUTATION = gql`
 `
 
 const Signout = () => {
-    return (
-        <Mutation
-            mutation={SIGNOUT_MUTATION}
-            refetchQueries={[{query: READ_USER_QUERY}]}
-        >
-            {signout => {
-                return (
-                    <button onClick={signout}>Signout</button>
-                )
-            }}
-        </Mutation>
-    )
+    const [signout] = useMutation(SIGNOUT_MUTATION, {
+        refetchQueries: [{query: READ_USER_QUERY}],
+    })
+
+    return <button onClick={signout}>Signout</button>
 }
 
 export default Signout

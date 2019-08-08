@@ -2,7 +2,7 @@ import React from "react"
 import App from "next/app"
 import {Container} from "next/app"
 import Page from "../components/Page"
-import {ApolloProvider} from "react-apollo"
+import {ApolloProvider} from "@apollo/react-hooks"
 import withApollo from "../utils/with-apollo"
 
 class MyApp extends App {

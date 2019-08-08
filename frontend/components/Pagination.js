@@ -2,7 +2,7 @@ import React from "react"
 import Link from "next/link"
 import styled from "styled-components"
 import {gql} from "apollo-boost"
-import {Query} from "react-apollo"
+import {useQuery} from "@apollo/react-hooks"
 import Head from "next/head"
 import {useRouter} from "next/router"
 import Error from "./Error"
@@ -11,7 +11,7 @@ const PAGINATION_QUERY = gql`
     query PAGINATION_QUERY {
         itemsConnection {
             aggregate {
-               count
+                count
             }
         }
     }
@@ -38,7 +38,7 @@ const PaginationWrapper = styled.div`
         }
     }
 
-    a[aria-disabled='true'] {
+    a[aria-disabled="true"] {
         color: grey;
         pointer-events: none;
     }
@@ -46,44 +46,46 @@ const PaginationWrapper = styled.div`
 
 const Pagination = () => {
     const router = useRouter()
-    const page = Object.keys(router.query).length > 0
-        ? parseInt(router.query.page)
-        : 1
+    const page =
+        Object.keys(router.query).length > 0 ? parseInt(router.query.page) : 1
+
+    const {loading, error, data} = useQuery(PAGINATION_QUERY)
+
+    if (loading) {
+        return <p>Loading...</p>
+    }
+
+    if (error) {
+        return <Error error={error}/>
+    }
+
+    const {count} = data.itemsConnection.aggregate
+    const pages = Math.ceil(count / process.env.pagination.perPage)
 
     return (
-        <Query query={PAGINATION_QUERY}>
-            {({data, loading, error}) => {
-                if (loading) return <p>Loading...</p>
-                if (error) return <Error error={error}/>
+        <PaginationWrapper>
+            <Head>
+                <title>
+                    Sick Fits! | Page {page} of {pages}
+                </title>
+            </Head>
 
-                const {count} = data.itemsConnection.aggregate
-                const pages = Math.ceil(count / process.env.pagination.perPage)
+            <Link prefetch href={`/shop/page/${page - 1}`}>
+                <a aria-disabled={page <= 1}>👈🏼 Prev</a>
+            </Link>
 
-                return (
-                    <PaginationWrapper>
-                        <Head>
-                            <title>Sick Fits! | Page {page} of {pages}</title>
-                        </Head>
+            <p>
+                Page {page} of {pages}
+            </p>
+            <p>{count} Items</p>
 
-                        <Link prefetch href={`/shop/page/${page - 1}`}>
-                            <a aria-disabled={page <= 1}>👈🏼 Prev</a>
-                        </Link>
-
-                        <p>Page {page} of {pages}</p>
-                        <p>{count} Items</p>
-
-                        <Link prefetch href={`/shop/page/${page + 1}`}>
-                            <a aria-disabled={page >= pages}>Next 👉🏼</a>
-                        </Link>
-                    </PaginationWrapper>
-                )
-            }}
-        </Query>
+            <Link prefetch href={`/shop/page/${page + 1}`}>
+                <a aria-disabled={page >= pages}>Next 👉🏼</a>
+            </Link>
+        </PaginationWrapper>
     )
 }
 
-Pagination.propTypes = {
-
-}
+Pagination.propTypes = {}
 
 export default Pagination

@@ -7,9 +7,7 @@ import Signout from "./Signout"
 const Navigation = () => {
     return (
         <User>
-            {({data}) => {
-                const {me} = data
-
+            {({me}) => {
                 return (
                     <NavigationWrapper>
                         <Link href="/shop">

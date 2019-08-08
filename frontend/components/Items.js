@@ -1,5 +1,5 @@
 import React from "react"
-import {Query} from "react-apollo"
+import {useQuery} from "@apollo/react-hooks"
 import {gql} from "apollo-boost"
 import styled from "styled-components"
 import {useRouter} from "next/router"
@@ -40,26 +40,30 @@ const Items = () => {
     const router = useRouter()
     const {page} = router.query || 1
 
+    const {loading, error, data} = useQuery(READ_ITEMS_QUERY, {
+        variables: {skip: process.env.pagination.perPage * (page - 1)},
+    })
+
+    if (loading) {
+        return <p>Loading...</p>
+    }
+
+    if (error) {
+        return <Error error={error}/>
+    }
+
+    const {items} = data
+
     return (
         <Center>
             <Pagination/>
-            <Query
-                query={READ_ITEMS_QUERY}
-                variables={{skip: process.env.pagination.perPage * (page - 1)}}
-            >
-                {({loading, error, data}) => {
-                    if (loading) return <p>Loading...</p>
-                    if (error) return <Error error={error}/>
 
-                    const {items} = data
+            <ItemList>
+                {items.map(item => (
+                    <Item key={item.id} item={item}/>
+                ))}
+            </ItemList>
 
-                    return (
-                        <ItemList>
-                            {items.map(item => <Item key={item.id} item={item}/>)}
-                        </ItemList>
-                    )
-                }}
-            </Query>
             <Pagination/>
         </Center>
     )
