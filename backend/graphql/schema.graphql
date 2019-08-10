@@ -4,6 +4,13 @@ type Message {
     message: String!
 }
 
+type User {
+    id: ID!
+    name: String!
+    email: String!
+    permissions: [Permission!]!
+}
+
 type Query {
     users: [User]!
     items(
@@ -25,4 +32,5 @@ type Mutation {
     signup(name: String!, email: String!, password: String!): User!
     signin(email: String!, password: String!): User!
     signout: Message!
+    requestReset(email: String!): Message!
 }

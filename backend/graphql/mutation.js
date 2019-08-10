@@ -1,6 +1,7 @@
 const database = require("../prisma/database")
 const bcrypt = require("bcryptjs")
 const jwt = require("jsonwebtoken")
+const {randomBytes} = require("crypto")
 
 const Mutation = {
     createUser: (parent, {data}) => database.mutation.createUser({data}),
@@ -55,6 +56,30 @@ const Mutation = {
     signout: (parent, args, context) => {
         context.res.clearCookie("token")
         const message = {message: "Goodbye!"}
+        return message
+    },
+    requestReset: async(parent, args) => {
+        const {email} = args
+        const user = await database.query.user({where: {email}})
+
+        if (!user) {
+            throw new Error(`No user with email ${email}!`)
+        }
+
+        const resetToken = randomBytes(20).toString("hex")
+        const resetTokenExpiration = Date.now() + 3600000
+
+        const response = await database.mutation.updateUser({
+            where: {email},
+            data: {resetToken, resetTokenExpiration},
+        })
+
+        console.log(response)
+
+        const message = {
+            message: "Check your email for a link to reset your password!",
+        }
+
         return message
     },
 }
