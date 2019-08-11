@@ -3,6 +3,9 @@ const bcrypt = require("bcryptjs")
 const jwt = require("jsonwebtoken")
 const {randomBytes} = require("crypto")
 
+const ONE_HOUR = 3600000
+const ONE_YEAR = 1000 * 60 * 60 * 24 * 365
+
 const Mutation = {
     createUser: (parent, {data}) => database.mutation.createUser({data}),
     createItem: (parent, {data}) => database.mutation.createItem({data}),
@@ -26,7 +29,7 @@ const Mutation = {
         const token = jwt.sign({id: user.id}, process.env.SECRET)
         context.res.cookie("token", token, {
             httpOnly: true,
-            maxAge: 1000 * 60 * 60 * 24 * 365,
+            maxAge: ONE_YEAR,
         })
 
         return user
@@ -48,7 +51,7 @@ const Mutation = {
         const token = jwt.sign({id: user.id}, process.env.SECRET)
         context.res.cookie("token", token, {
             httpOnly: true,
-            maxAge: 1000 * 60 * 60 * 24 * 365,
+            maxAge: ONE_YEAR,
         })
 
         return user
@@ -67,20 +70,54 @@ const Mutation = {
         }
 
         const resetToken = randomBytes(20).toString("hex")
-        const resetTokenExpiration = Date.now() + 3600000
+        const resetTokenExpiration = Date.now() + ONE_HOUR
 
-        const response = await database.mutation.updateUser({
+        await database.mutation.updateUser({
             where: {email},
             data: {resetToken, resetTokenExpiration},
         })
-
-        console.log(response)
 
         const message = {
             message: "Check your email for a link to reset your password!",
         }
 
         return message
+    },
+    resetPassword: async(parent, args, context) => {
+        const {resetToken, password, confirmPassword} = args
+
+        if (password !== confirmPassword) {
+            throw new Error("Passwords do not match!")
+        }
+
+        const [user] = await database.query.users({
+            where: {
+                resetToken,
+                resetTokenExpiration_gte: Date.now() - ONE_HOUR,
+            },
+        })
+
+        if (!user) {
+            throw new Error("Your password reset token is invalid or expired!")
+        }
+
+        const hashedPassword = await bcrypt.hash(password, 10)
+        const updatedUser = await database.mutation.updateUser({
+            where: {email: user.email},
+            data: {
+                password: hashedPassword,
+                resetToken: null,
+                resetTokenExpiration: null,
+            },
+        })
+
+        const token = jwt.sign({id: updatedUser.id}, process.env.SECRET)
+        context.res.cookie("token", token, {
+            httpOnly: true,
+            maxAge: ONE_YEAR,
+        })
+
+        return updatedUser
     },
 }
 
