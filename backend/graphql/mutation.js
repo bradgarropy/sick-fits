@@ -69,12 +69,12 @@ const Mutation = {
             throw new Error(`No user with email ${email}!`)
         }
 
-        const resetToken = randomBytes(20).toString("hex")
-        const resetTokenExpiration = Date.now() + ONE_HOUR
+        const token = randomBytes(20).toString("hex")
+        const tokenExpiration = Date.now() + ONE_HOUR
 
         await database.mutation.updateUser({
             where: {email},
-            data: {resetToken, resetTokenExpiration},
+            data: {token, tokenExpiration},
         })
 
         const message = {
@@ -83,8 +83,8 @@ const Mutation = {
 
         return message
     },
-    resetPassword: async(parent, args, context) => {
-        const {resetToken, password, confirmPassword} = args
+    reset: async(parent, args, context) => {
+        const {token, password, confirmPassword} = args
 
         if (password !== confirmPassword) {
             throw new Error("Passwords do not match!")
@@ -92,8 +92,8 @@ const Mutation = {
 
         const [user] = await database.query.users({
             where: {
-                resetToken,
-                resetTokenExpiration_gte: Date.now() - ONE_HOUR,
+                token,
+                tokenExpiration_gte: Date.now() - ONE_HOUR,
             },
         })
 
@@ -106,13 +106,13 @@ const Mutation = {
             where: {email: user.email},
             data: {
                 password: hashedPassword,
-                resetToken: null,
-                resetTokenExpiration: null,
+                token: null,
+                tokenExpiration: null,
             },
         })
 
-        const token = jwt.sign({id: updatedUser.id}, process.env.SECRET)
-        context.res.cookie("token", token, {
+        const authToken = jwt.sign({id: updatedUser.id}, process.env.SECRET)
+        context.res.cookie("token", authToken, {
             httpOnly: true,
             maxAge: ONE_YEAR,
         })

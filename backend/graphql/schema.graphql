@@ -33,9 +33,5 @@ type Mutation {
     signin(email: String!, password: String!): User!
     signout: Message!
     requestReset(email: String!): Message!
-    resetPassword(
-        resetToken: String!
-        password: String!
-        confirmPassword: String!
-    ): User!
+    reset(token: String!, password: String!, confirmPassword: String!): User!
 }

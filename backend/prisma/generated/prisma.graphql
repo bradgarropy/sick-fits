@@ -274,8 +274,8 @@ type User {
   name: String!
   email: String!
   password: String!
-  resetToken: String
-  resetTokenExpiration: Float
+  token: String
+  tokenExpiration: Float
   permissions: [Permission!]!
 }
 
@@ -290,8 +290,8 @@ input UserCreateInput {
   name: String!
   email: String!
   password: String!
-  resetToken: String
-  resetTokenExpiration: Float
+  token: String
+  tokenExpiration: Float
   permissions: UserCreatepermissionsInput
 }
 
@@ -313,10 +313,10 @@ enum UserOrderByInput {
   email_DESC
   password_ASC
   password_DESC
-  resetToken_ASC
-  resetToken_DESC
-  resetTokenExpiration_ASC
-  resetTokenExpiration_DESC
+  token_ASC
+  token_DESC
+  tokenExpiration_ASC
+  tokenExpiration_DESC
 }
 
 type UserPreviousValues {
@@ -324,8 +324,8 @@ type UserPreviousValues {
   name: String!
   email: String!
   password: String!
-  resetToken: String
-  resetTokenExpiration: Float
+  token: String
+  tokenExpiration: Float
   permissions: [Permission!]!
 }
 
@@ -351,8 +351,8 @@ input UserUpdateInput {
   name: String
   email: String
   password: String
-  resetToken: String
-  resetTokenExpiration: Float
+  token: String
+  tokenExpiration: Float
   permissions: UserUpdatepermissionsInput
 }
 
@@ -360,8 +360,8 @@ input UserUpdateManyMutationInput {
   name: String
   email: String
   password: String
-  resetToken: String
-  resetTokenExpiration: Float
+  token: String
+  tokenExpiration: Float
   permissions: UserUpdatepermissionsInput
 }
 
@@ -426,28 +426,28 @@ input UserWhereInput {
   password_not_starts_with: String
   password_ends_with: String
   password_not_ends_with: String
-  resetToken: String
-  resetToken_not: String
-  resetToken_in: [String!]
-  resetToken_not_in: [String!]
-  resetToken_lt: String
-  resetToken_lte: String
-  resetToken_gt: String
-  resetToken_gte: String
-  resetToken_contains: String
-  resetToken_not_contains: String
-  resetToken_starts_with: String
-  resetToken_not_starts_with: String
-  resetToken_ends_with: String
-  resetToken_not_ends_with: String
-  resetTokenExpiration: Float
-  resetTokenExpiration_not: Float
-  resetTokenExpiration_in: [Float!]
-  resetTokenExpiration_not_in: [Float!]
-  resetTokenExpiration_lt: Float
-  resetTokenExpiration_lte: Float
-  resetTokenExpiration_gt: Float
-  resetTokenExpiration_gte: Float
+  token: String
+  token_not: String
+  token_in: [String!]
+  token_not_in: [String!]
+  token_lt: String
+  token_lte: String
+  token_gt: String
+  token_gte: String
+  token_contains: String
+  token_not_contains: String
+  token_starts_with: String
+  token_not_starts_with: String
+  token_ends_with: String
+  token_not_ends_with: String
+  tokenExpiration: Float
+  tokenExpiration_not: Float
+  tokenExpiration_in: [Float!]
+  tokenExpiration_not_in: [Float!]
+  tokenExpiration_lt: Float
+  tokenExpiration_lte: Float
+  tokenExpiration_gt: Float
+  tokenExpiration_gte: Float
   AND: [UserWhereInput!]
   OR: [UserWhereInput!]
   NOT: [UserWhereInput!]
