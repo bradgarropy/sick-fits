@@ -2,6 +2,7 @@ const database = require("../prisma/database")
 const bcrypt = require("bcryptjs")
 const jwt = require("jsonwebtoken")
 const {randomBytes} = require("crypto")
+const {transport, createEmail} = require("../mail")
 
 const ONE_HOUR = 3600000
 const ONE_YEAR = 1000 * 60 * 60 * 24 * 365
@@ -75,6 +76,20 @@ const Mutation = {
         await database.mutation.updateUser({
             where: {email},
             data: {token, tokenExpiration},
+        })
+
+        const text = `
+            Your password reset token is here!
+            <a href="${process.env.CLIENT_URL}/reset/${token}">
+                Click here to reset your password!
+            </a>
+        `
+
+        await transport.sendMail({
+            from: "hey@sickfits.com",
+            to: email,
+            subject: "Your Password Reset Link!",
+            html: createEmail(text),
         })
 
         const message = {
