@@ -15,13 +15,11 @@ const CREATE_ITEM_MUTATION = gql`
         $largeImage: String!
     ) {
         createItem(
-            data: {
-                title: $title
-                description: $description
-                price: $price
-                image: $image
-                largeImage: $largeImage
-            }
+            title: $title
+            description: $description
+            price: $price
+            image: $image
+            largeImage: $largeImage
         ) {
             id
             title
@@ -82,7 +80,7 @@ const CreateItem = () => {
         <Form method="post" onSubmit={onSubmit}>
             <h2>Sell something!</h2>
 
-            <Error error={error}/>
+            <Error error={error} />
 
             <fieldset disabled={loading} aria-busy={loading}>
                 <label htmlFor="image">
@@ -96,7 +94,7 @@ const CreateItem = () => {
                         required
                     />
                     {image && (
-                        <img src={image} alt="upload preview" width="200"/>
+                        <img src={image} alt="upload preview" width="200" />
                     )}
                 </label>
 

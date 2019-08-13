@@ -9,7 +9,27 @@ const ONE_YEAR = 1000 * 60 * 60 * 24 * 365
 
 const Mutation = {
     createUser: (parent, {data}) => database.mutation.createUser({data}),
-    createItem: (parent, {data}) => database.mutation.createItem({data}),
+    createItem: async(parent, args, context, info) => {
+        const {id} = context.req
+
+        if (!id) {
+            throw new Error("You must be logged in to create an item!")
+        }
+
+        const item = await database.mutation.createItem(
+            {
+                data: {
+                    ...args,
+                    user: {
+                        connect: {id},
+                    },
+                },
+            },
+            info,
+        )
+
+        return item
+    },
     updateItem: (parent, {data, where}) =>
         database.mutation.updateItem({data, where}),
     deleteItem: (parent, {where}) => database.mutation.deleteItem({where}),
