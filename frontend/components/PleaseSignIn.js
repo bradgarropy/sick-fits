@@ -5,13 +5,13 @@ import Signin from "./Signin"
 
 const PleaseSignIn = props => {
     const {loading, data} = useQuery(READ_USER_QUERY)
-    console.log(data)
+    const {me} = data
 
     if (loading) {
         return <p>Loading...</p>
     }
 
-    if (!data.me) {
+    if (!me) {
         return (
             <>
                 <p>Please sign in to continue.</p>
