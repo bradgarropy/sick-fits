@@ -1,4 +1,5 @@
 import React from "react"
+import {useState} from "react"
 import PropTypes from "prop-types"
 import {useQuery} from "@apollo/react-hooks"
 import {gql} from "apollo-boost"
@@ -54,7 +55,7 @@ const Permissions = () => {
                 </thead>
                 <tbody>
                     {users.map((user, index) => (
-                        <User key={index} user={user}/>
+                        <UserPermissions key={index} user={user}/>
                     ))}
                 </tbody>
             </Table>
@@ -62,17 +63,39 @@ const Permissions = () => {
     )
 }
 
-const User = ({user}) => {
-    const {name, email} = user
+const UserPermissions = ({user}) => {
+    const [permissions, setPermissions] = useState(user.permissions)
+
+    const onChange = event => {
+        const {value, checked} = event.target
+        const newPermissions = [...permissions]
+
+        if (checked) {
+            newPermissions.push(value)
+        } else {
+            const index = newPermissions.indexOf(value)
+            newPermissions.splice(index, 1)
+        }
+
+        setPermissions(newPermissions)
+        return
+    }
 
     return (
         <tr>
-            <td>{name}</td>
-            <td>{email}</td>
+            <td>{user.name}</td>
+            <td>{user.email}</td>
             {PERMISSIONS.map((PERMISSION, index) => {
                 return (
                     <td key={index}>
-                        <input type="checkbox"/>
+                        <label>
+                            <input
+                                type="checkbox"
+                                value={PERMISSION}
+                                checked={permissions.includes(PERMISSION)}
+                                onChange={onChange}
+                            />
+                        </label>
                     </td>
                 )
             })}
@@ -83,8 +106,13 @@ const User = ({user}) => {
     )
 }
 
-User.propTypes = {
-    user: PropTypes.object.isRequired,
+UserPermissions.propTypes = {
+    user: PropTypes.shape({
+        id: PropTypes.string,
+        name: PropTypes.string,
+        email: PropTypes.string,
+        permissions: PropTypes.arrayOf(PropTypes.string),
+    }).isRequired,
 }
 
 export default Permissions
