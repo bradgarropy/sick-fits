@@ -1,4 +1,4 @@
-const express = require("express");
+const express = require("express")
 const cookieParser = require("cookie-parser")
 const cors = require("cors")
 const jwt = require("jsonwebtoken")
@@ -8,7 +8,7 @@ const Query = require("./query")
 const Mutation = require("./mutation")
 const database = require("../prisma/database")
 
-const server = express();
+const server = express()
 
 const options = {
     origin: process.env.CLIENT_URL,
@@ -17,15 +17,25 @@ const options = {
 
 server.use(cors(options))
 server.use(cookieParser())
-server.use("*", (req, res, next) => {
+server.use("*", async(req, res, next) => {
     const {token} = req.cookies
 
     if (token) {
         const {id} = jwt.verify(token, process.env.SECRET)
-        req.id = id
+        const user = await database.query.user(
+            {where: {id}},
+            "{id, name, email, permissions}",
+        )
+
+        req.user = {
+            id: user.id,
+            name: user.name,
+            email: user.email,
+            permissions: user.permissions,
+        }
     }
 
-    next()
+    return next()
 })
 
 const typeDefs = importSchema("graphql/schema.graphql")
@@ -51,6 +61,6 @@ const apolloServer = new ApolloServer({
 apolloServer.applyMiddleware({
     app: server,
     cors: false,
-});
+})
 
 module.exports = server

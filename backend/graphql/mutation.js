@@ -10,9 +10,9 @@ const ONE_YEAR = 1000 * 60 * 60 * 24 * 365
 const Mutation = {
     createUser: (parent, {data}) => database.mutation.createUser({data}),
     createItem: async(parent, args, context, info) => {
-        const {id} = context.req
+        const {user} = context.req
 
-        if (!id) {
+        if (!user) {
             throw new Error("You must be logged in to create an item!")
         }
 
@@ -21,7 +21,7 @@ const Mutation = {
                 data: {
                     ...args,
                     user: {
-                        connect: {id},
+                        connect: {id: user.id},
                     },
                 },
             },
@@ -57,7 +57,10 @@ const Mutation = {
     },
     signin: async(parent, args, context) => {
         const {email, password} = args
-        const user = await database.query.user({where: {email}})
+        const user = await database.query.user(
+            {where: {email}},
+            "{id, name, email, permissions, password}",
+        )
 
         if (!user) {
             throw new Error(`No user with email ${email}!`)

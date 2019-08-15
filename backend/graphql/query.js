@@ -1,20 +1,32 @@
 const {forwardTo} = require("prisma-binding")
 const database = require("../prisma/database")
+const {checkPermissions} = require("../utils")
 
 const Query = {
-    users: forwardTo("database"),
+    users: async(parent, args, context, info) => {
+        const {user} = context.req
+
+        if (!user) {
+            throw new Error("You must be logged in to view users!")
+        }
+
+        checkPermissions(user, ["ADMIN", "PERMISSION_UPDATE"])
+
+        const users = await database.query.users({}, info)
+        return users
+    },
     items: forwardTo("database"),
     item: forwardTo("database"),
     itemsConnection: forwardTo("database"),
     me: async(parent, args, context, info) => {
-        const {id} = context.req
+        const {user} = context.req
 
-        if (!id) {
+        if (!user) {
             return null
         }
 
-        const user = await database.query.user({where: {id}}, info)
-        return user
+        const dbUser = await database.query.user({where: {id: user.id}}, info)
+        return dbUser
     },
 }
 
