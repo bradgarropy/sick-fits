@@ -3,12 +3,39 @@ const bcrypt = require("bcryptjs")
 const jwt = require("jsonwebtoken")
 const {randomBytes} = require("crypto")
 const {transport, createEmail} = require("../mail")
+const {checkPermissions} = require("../utils")
 
 const ONE_HOUR = 3600000
 const ONE_YEAR = 1000 * 60 * 60 * 24 * 365
 
 const Mutation = {
     createUser: (parent, {data}) => database.mutation.createUser({data}),
+    updatePermissions: async(parent, args, context, info) => {
+        if (!context.req.user) {
+            throw new Error("You must be logged in to create an item!")
+        }
+
+        const user = await database.query.user(
+            {
+                where: {
+                    id: context.req.user.id,
+                },
+            },
+            info,
+        )
+
+        checkPermissions(user, ["ADMIN", "PERMISSION_UPDATE"])
+
+        const updatedUser = await database.mutation.updateUser(
+            {
+                where: {id: args.id},
+                data: {permissions: {set: args.permissions}},
+            },
+            info,
+        )
+
+        return updatedUser
+    },
     createItem: async(parent, args, context, info) => {
         const {user} = context.req
 

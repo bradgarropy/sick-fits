@@ -19,14 +19,16 @@ const Query = {
     item: forwardTo("database"),
     itemsConnection: forwardTo("database"),
     me: async(parent, args, context, info) => {
-        const {user} = context.req
-
-        if (!user) {
+        if (!context.req.user) {
             return null
         }
 
-        const dbUser = await database.query.user({where: {id: user.id}}, info)
-        return dbUser
+        const user = await database.query.user(
+            {where: {id: context.req.user.id}},
+            info,
+        )
+
+        return user
     },
 }
 

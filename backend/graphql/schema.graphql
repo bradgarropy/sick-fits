@@ -26,7 +26,7 @@ type Query {
 
 type Mutation {
     createUser(data: UserCreateInput!): User!
-    updateUser(): User!
+    updatePermissions(id: ID!, permissions: [Permission]): User!
     createItem(
         title: String!
         description: String!

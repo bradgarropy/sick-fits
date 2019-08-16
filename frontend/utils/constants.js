@@ -1,0 +1,10 @@
+const PERMISSIONS = [
+    "ADMIN",
+    "USER",
+    "ITEM_CREATE",
+    "ITEM_UPDATE",
+    "ITEM_DELETE",
+    "PERMISSION_UPDATE",
+]
+
+export {PERMISSIONS}
