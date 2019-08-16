@@ -19,7 +19,8 @@ const DeleteItem = ({children, id}) => {
         cache.writeQuery({query: READ_ITEMS_QUERY, data})
     }
 
-    const [deleteItem] = useMutation(DELETE_ITEM_MUTATION)
+    const [deleteItem, {error}] = useMutation(DELETE_ITEM_MUTATION)
+    error && alert(error)
 
     const onClick = async() => {
         if (confirm("Are you sure you want to delete this item?")) {

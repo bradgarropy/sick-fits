@@ -24,7 +24,14 @@ const Mutation = {
             info,
         )
 
-        checkPermissions(user, ["ADMIN", "PERMISSION_UPDATE"])
+        const hasPermissions = checkPermissions(user, [
+            "ADMIN",
+            "PERMISSION_UPDATE",
+        ])
+
+        if (!hasPermissions) {
+            throw new Error("You do not have permission to do that!")
+        }
 
         const updatedUser = await database.mutation.updateUser(
             {
@@ -59,7 +66,22 @@ const Mutation = {
     },
     updateItem: (parent, {data, where}) =>
         database.mutation.updateItem({data, where}),
-    deleteItem: (parent, {where}) => database.mutation.deleteItem({where}),
+    deleteItem: async(parent, {where}, context, info) => {
+        const item = await database.query.item({where}, "{id, user {id}}")
+
+        const ownsItem = context.req.user.id === item.user.id
+        const hasPermissions = checkPermissions(context.req.user, [
+            "ADMIN",
+            "ITEM_DELETE",
+        ])
+
+        if (!ownsItem && !hasPermissions) {
+            throw new Error("You do not have permission to do that!")
+        }
+
+        const deletedItem = await database.mutation.deleteItem({where}, info)
+        return deletedItem
+    },
     signup: async(parent, args, context, info) => {
         args.email = args.email.toLowerCase()
         args.password = await bcrypt.hash(args.password, 10)
