@@ -2,8 +2,9 @@ import React from "react"
 import Link from "next/link"
 import Router from "next/router"
 import styled from "styled-components"
-import Navigation from "./Navigation"
 import NProgress from "nprogress"
+import Cart from "./Cart"
+import Navigation from "./Navigation"
 
 Router.onRouteChangeStart = () => {
     NProgress.start()
@@ -32,7 +33,7 @@ const Logo = styled.h1`
         text-decoration: none;
     }
 
-    @media(max-width: 1300px) {
+    @media (max-width: 1300px) {
         margin: 0;
         text-align: center;
     }
@@ -46,7 +47,7 @@ const HeaderWrapper = styled.header`
         justify-content: space-between;
         align-items: stretch;
 
-        @media(max-width: 1300px) {
+        @media (max-width: 1300px) {
             grid-template-columns: 1fr;
             justify-content: center;
         }
@@ -69,12 +70,12 @@ const Header = () => {
                     </Link>
                 </Logo>
 
-                <Navigation/>
+                <Navigation />
             </div>
 
             <div className="sub-bar">Search</div>
 
-            <div>Cart</div>
+            <Cart open />
         </HeaderWrapper>
     )
 }
