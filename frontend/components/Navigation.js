@@ -1,11 +1,13 @@
 import React from "react"
 import Link from "next/link"
-import {useQuery} from "@apollo/react-hooks"
+import {useQuery, useMutation} from "@apollo/react-hooks"
 import {READ_USER_QUERY} from "./User"
 import NavigationWrapper from "../styles/Navigation"
 import Signout from "./Signout"
+import {TOGGLE_CART_MUTATION} from "./Cart"
 
 const Navigation = () => {
+    const [toggleCart] = useMutation(TOGGLE_CART_MUTATION)
     const {data} = useQuery(READ_USER_QUERY)
     const {me} = data
 
@@ -30,6 +32,8 @@ const Navigation = () => {
                     </Link>
 
                     <Signout/>
+
+                    <button onClick={toggleCart}>My Cart</button>
                 </>
             )}
 

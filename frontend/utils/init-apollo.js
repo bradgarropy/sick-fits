@@ -1,11 +1,20 @@
-import {ApolloClient, InMemoryCache, HttpLink} from "apollo-boost"
+import {ApolloClient, InMemoryCache, HttpLink, gql} from "apollo-boost"
 import fetch from "isomorphic-unfetch"
+import {READ_CART_QUERY, TOGGLE_CART_MUTATION} from "../components/Cart"
 
 let apolloClient = null
 
 function create(initialState) {
     // Check out https://github.com/zeit/next.js/pull/4611 if you want to use the AWSAppSyncClient
     const isBrowser = typeof window !== "undefined"
+    const cache = new InMemoryCache().restore(initialState || {})
+
+    cache.writeData({
+        data: {
+            isCartOpen: true,
+        },
+    })
+
     return new ApolloClient({
         connectToDevTools: isBrowser,
         ssrMode: !isBrowser, // Disables forceFetch on the server (so queries are only run once)
@@ -15,7 +24,20 @@ function create(initialState) {
             // Use fetch() polyfill on the server
             fetch: !isBrowser && fetch,
         }),
-        cache: new InMemoryCache().restore(initialState || {}),
+        cache,
+        resolvers: {
+            Mutation: {
+                toggleCart: (root, args, {cache}) => {
+                    const {isCartOpen} = cache.readQuery({
+                        query: READ_CART_QUERY,
+                    })
+
+                    const data = {isCartOpen: !isCartOpen}
+                    cache.writeData({data})
+                    return data
+                },
+            },
+        },
     })
 }
 
