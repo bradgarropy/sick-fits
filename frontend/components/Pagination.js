@@ -70,7 +70,7 @@ const Pagination = () => {
                 </title>
             </Head>
 
-            <Link prefetch href={`/shop/page/${page - 1}`}>
+            <Link href={`/shop/page/${page - 1}`}>
                 <a aria-disabled={page <= 1}>👈🏼 Prev</a>
             </Link>
 
@@ -79,7 +79,7 @@ const Pagination = () => {
             </p>
             <p>{count} Items</p>
 
-            <Link prefetch href={`/shop/page/${page + 1}`}>
+            <Link href={`/shop/page/${page + 1}`}>
                 <a aria-disabled={page >= pages}>Next 👉🏼</a>
             </Link>
         </PaginationWrapper>

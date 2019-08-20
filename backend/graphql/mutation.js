@@ -10,7 +10,7 @@ const ONE_YEAR = 1000 * 60 * 60 * 24 * 365
 
 const Mutation = {
     createUser: (parent, {data}) => database.mutation.createUser({data}),
-    updatePermissions: async(parent, args, context, info) => {
+    updatePermissions: async (parent, args, context, info) => {
         if (!context.req.user) {
             throw new Error("You must be logged in to create an item!")
         }
@@ -43,7 +43,7 @@ const Mutation = {
 
         return updatedUser
     },
-    createItem: async(parent, args, context, info) => {
+    createItem: async (parent, args, context, info) => {
         const {user} = context.req
 
         if (!user) {
@@ -66,7 +66,7 @@ const Mutation = {
     },
     updateItem: (parent, {data, where}) =>
         database.mutation.updateItem({data, where}),
-    deleteItem: async(parent, {where}, context, info) => {
+    deleteItem: async (parent, {where}, context, info) => {
         const item = await database.query.item({where}, "{id, user {id}}")
 
         const ownsItem = context.req.user.id === item.user.id
@@ -82,7 +82,7 @@ const Mutation = {
         const deletedItem = await database.mutation.deleteItem({where}, info)
         return deletedItem
     },
-    signup: async(parent, args, context, info) => {
+    signup: async (parent, args, context, info) => {
         args.email = args.email.toLowerCase()
         args.password = await bcrypt.hash(args.password, 10)
 
@@ -104,7 +104,7 @@ const Mutation = {
 
         return user
     },
-    signin: async(parent, args, context) => {
+    signin: async (parent, args, context) => {
         const {email, password} = args
         const user = await database.query.user(
             {where: {email}},
@@ -134,7 +134,7 @@ const Mutation = {
         const message = {message: "Goodbye!"}
         return message
     },
-    requestReset: async(parent, args) => {
+    requestReset: async (parent, args) => {
         const {email} = args
         const user = await database.query.user({where: {email}})
 
@@ -170,7 +170,7 @@ const Mutation = {
 
         return message
     },
-    reset: async(parent, args, context) => {
+    reset: async (parent, args, context) => {
         const {token, password, confirmPassword} = args
 
         if (password !== confirmPassword) {
@@ -205,6 +205,36 @@ const Mutation = {
         })
 
         return updatedUser
+    },
+    addToCart: async (parent, args, context, info) => {
+        if (!context.req.user) {
+            throw new Error("You must be logged in to add items to your cart!")
+        }
+
+        const [existingCartItem] = await database.query.cartItems({
+            where: {
+                user: {id: context.req.user.id},
+                item: {id: args.id},
+            },
+        })
+
+        if (existingCartItem) {
+            const updatedCartItem = database.mutation.updateCartItem({
+                where: {id: existingCartItem.id},
+                data: {quantity: existingCartItem.quantity + 1},
+            })
+
+            return updatedCartItem
+        } else {
+            const newCartItem = database.mutation.createCartItem({
+                data: {
+                    user: {connect: {id: context.req.user.id}},
+                    item: {connect: {id: args.id}},
+                },
+            })
+
+            return newCartItem
+        }
     },
 }
 

@@ -3,6 +3,7 @@ import PropTypes from "prop-types"
 import Link from "next/link"
 import format from "../utils/money"
 import DeleteItem from "./DeleteItem"
+import AddToCart from "./AddToCart"
 import {ItemWrapper, ItemTitle, ItemButtons, PriceTag} from "../styles"
 
 const Item = ({item}) => {
@@ -27,7 +28,7 @@ const Item = ({item}) => {
                     <a>Edit ✍🏼</a>
                 </Link>
 
-                <button>Add To Cart 🛒</button>
+                <AddToCart id={id}/>
                 <DeleteItem id={id}>Delete ❌</DeleteItem>
             </ItemButtons>
         </ItemWrapper>

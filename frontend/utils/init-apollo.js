@@ -1,6 +1,6 @@
-import {ApolloClient, InMemoryCache, HttpLink, gql} from "apollo-boost"
+import {ApolloClient, InMemoryCache, HttpLink} from "apollo-boost"
 import fetch from "isomorphic-unfetch"
-import {READ_CART_QUERY, TOGGLE_CART_MUTATION} from "../components/Cart"
+import {READ_CART_QUERY} from "../components/Cart"
 
 let apolloClient = null
 
