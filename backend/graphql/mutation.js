@@ -236,6 +236,35 @@ const Mutation = {
             return newCartItem
         }
     },
+    removeFromCart: async (parent, args, context, info) => {
+        if (!context.req.user) {
+            throw new Error(
+                "You must be logged in to remove items from your cart!",
+            )
+        }
+
+        const cartItem = await database.query.cartItem(
+            {where: {id: args.id}},
+            "{id, user {id}}",
+        )
+
+        if (!cartItem) {
+            throw new Error("Cart item does not exist!")
+        }
+
+        if (cartItem.user.id !== context.req.user.id) {
+            throw new Error("That cart item does not belong to you!")
+        }
+
+        const deletedCartItem = await database.mutation.deleteCartItem(
+            {
+                where: {id: cartItem.id},
+            },
+            info,
+        )
+
+        return deletedCartItem
+    },
 }
 
 module.exports = Mutation
