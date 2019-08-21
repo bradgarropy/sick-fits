@@ -30,7 +30,21 @@ const RemoveFromCart = ({id}) => {
     const onClick = () => {
         removeFromCart({
             variables: {id},
-            refetchQueries: [{query: READ_USER_QUERY}],
+            update: (cache, payload) => {
+                const cartItemId = payload.data.removeFromCart.id
+                const data = cache.readQuery({query: READ_USER_QUERY})
+                data.me.cart = data.me.cart.filter(
+                    cartItem => cartItem.id !== cartItemId,
+                )
+                cache.writeQuery({query: READ_USER_QUERY, data})
+            },
+            optimisticResponse: {
+                __typename: "Mutation",
+                removeFromCart: {
+                    __typename: "CartItem",
+                    id,
+                },
+            },
         })
     }
 
