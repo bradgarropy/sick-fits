@@ -1,7 +1,7 @@
 import React from "react"
 import PropTypes from "prop-types"
 import Link from "next/link"
-import format from "../utils/money"
+import {formatPrice} from "../utils/money"
 import DeleteItem from "./DeleteItem"
 import AddToCart from "./AddToCart"
 import {ItemWrapper, ItemTitle, ItemButtons, PriceTag} from "../styles"
@@ -19,7 +19,7 @@ const Item = ({item}) => {
                 </Link>
             </ItemTitle>
 
-            <PriceTag>{format(price)}</PriceTag>
+            <PriceTag>{formatPrice(price)}</PriceTag>
 
             <p>{description}</p>
 

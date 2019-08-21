@@ -1,4 +1,4 @@
-const format = amount => {
+const formatPrice = amount => {
     const options = {
         style: "currency",
         currency: "USD",
@@ -15,4 +15,13 @@ const format = amount => {
     return formatted
 }
 
-export default format
+const calculateTotal = cart => {
+    const totalPrice = cart.reduce(
+        (total, cartItem) => total + cartItem.quantity * cartItem.item.price,
+        0,
+    )
+
+    return totalPrice
+}
+
+export {formatPrice, calculateTotal}

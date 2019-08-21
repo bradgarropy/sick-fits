@@ -10,6 +10,17 @@ const READ_USER_QUERY = gql`
             name
             email
             permissions
+            cart {
+                id
+                quantity
+                item {
+                    id
+                    title
+                    description
+                    price
+                    image
+                }
+            }
         }
     }
 `
