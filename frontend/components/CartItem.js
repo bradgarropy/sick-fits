@@ -22,6 +22,10 @@ const CartItemWrapper = styled.li`
 `
 
 const CartItem = ({cartItem}) => {
+    if (!cartItem.item) {
+        return null
+    }
+
     return (
         <CartItemWrapper>
             <img
