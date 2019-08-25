@@ -16,10 +16,13 @@ const formatPrice = amount => {
 }
 
 const calculateTotal = cart => {
-    const totalPrice = cart.reduce(
-        (total, cartItem) => total + cartItem.quantity * cartItem.item.price,
-        0,
-    )
+    const totalPrice = cart.reduce((total, cartItem) => {
+        if (!cartItem.item) {
+            return total
+        }
+
+        return total + cartItem.quantity * cartItem.item.price
+    }, 0)
 
     return totalPrice
 }
