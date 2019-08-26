@@ -9,6 +9,9 @@ const config = {
         pagination: {
             perPage: process.env.ITEMS_PER_PAGE,
         },
+        stripe: {
+            key: process.env.STRIPE_PUBLIC_KEY,
+        },
     },
 }
 

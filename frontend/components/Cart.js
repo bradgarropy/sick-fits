@@ -6,6 +6,7 @@ import {CartStyles, Supreme, CloseButton, SickButton} from "../styles"
 import {formatPrice, calculateTotal} from "../utils/money"
 import {READ_USER_QUERY} from "./User"
 import CartItem from "./CartItem"
+import TakeMyMoney from "./TakeMyMoney"
 
 const READ_CART_QUERY = gql`
     query READ_CART_QUERY {
@@ -52,7 +53,10 @@ const Cart = () => {
 
             <footer>
                 <p>{formatPrice(total)}</p>
-                <SickButton>Checkout</SickButton>
+
+                <TakeMyMoney>
+                    <SickButton>Checkout</SickButton>
+                </TakeMyMoney>
             </footer>
         </CartStyles>
     )
