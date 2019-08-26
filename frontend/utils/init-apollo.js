@@ -11,7 +11,7 @@ function create(initialState) {
 
     cache.writeData({
         data: {
-            isCartOpen: true,
+            isCartOpen: false,
         },
     })
 
