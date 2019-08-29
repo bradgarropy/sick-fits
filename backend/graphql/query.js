@@ -10,7 +10,14 @@ const Query = {
             throw new Error("You must be logged in to view users!")
         }
 
-        checkPermissions(user, ["ADMIN", "PERMISSION_UPDATE"])
+        const hasPermissions = checkPermissions(user, [
+            "ADMIN",
+            "PERMISSION_UPDATE",
+        ])
+
+        if (!hasPermissions) {
+            throw new Error("You do not have permission to do that!")
+        }
 
         const users = await database.query.users({}, info)
         return users
@@ -29,6 +36,22 @@ const Query = {
         )
 
         return user
+    },
+    order: async(parent, args, context, info) => {
+        if (!context.req.user) {
+            throw new Error("You must be logged in to view your orders!")
+        }
+
+        const order = await database.query.order({where: {id: args.id}}, info)
+
+        const owner = order.user.id === context.req.user.id
+        const permissions = checkPermissions(context.req.user, ["ADMIN"])
+
+        if (!owner && !permissions) {
+            throw new Error("You do not have permission to do that!")
+        }
+
+        return order
     },
 }
 

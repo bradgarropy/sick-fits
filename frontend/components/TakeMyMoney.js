@@ -1,5 +1,7 @@
 import React from "react"
 import PropTypes from "prop-types"
+import Router from "next/router"
+import NProgress from "nprogress"
 import StripeCheckout from "react-stripe-checkout"
 import {useQuery, useMutation} from "@apollo/react-hooks"
 import {gql} from "apollo-boost"
@@ -30,7 +32,9 @@ const TakeMyMoney = ({children}) => {
     const {cart, email} = data.me
 
     const onToken = async token => {
-        await createOrder({variables: {token: token.id}})
+        NProgress.start()
+        const {data} = await createOrder({variables: {token: token.id}})
+        Router.push(`/order/${data.createOrder.id}`)
     }
 
     return (

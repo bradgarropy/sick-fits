@@ -62,7 +62,7 @@ const GetItem = () => {
     return (
         <>
             <Head>
-                <title>Sick Fits | {item.title}</title>
+                <title>Sick Fits! | {item.title}</title>
             </Head>
 
             <ItemWrapper>
