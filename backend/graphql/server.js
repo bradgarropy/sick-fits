@@ -24,15 +24,26 @@ server.use("*", async(req, res, next) => {
         const {id} = jwt.verify(token, process.env.SECRET)
         const user = await database.query.user(
             {where: {id}},
-            "{id, name, email, permissions}",
+            `{
+                id,
+                name,
+                email,
+                permissions,
+                cart {
+                    id
+                    quantity
+                    item {
+                        id
+                        title
+                        description
+                        price
+                        image
+                    }
+                }
+            }`,
         )
 
-        req.user = {
-            id: user.id,
-            name: user.name,
-            email: user.email,
-            permissions: user.permissions,
-        }
+        req.user = user
     }
 
     return next()

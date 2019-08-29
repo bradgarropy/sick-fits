@@ -44,4 +44,5 @@ type Mutation {
     reset(token: String!, password: String!, confirmPassword: String!): User!
     addToCart(id: ID!): CartItem
     removeFromCart(id: ID!): CartItem
+    createOrder(token: String!): Order!
 }

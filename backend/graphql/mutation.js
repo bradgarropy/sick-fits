@@ -4,13 +4,14 @@ const jwt = require("jsonwebtoken")
 const {randomBytes} = require("crypto")
 const {transport, createEmail} = require("../mail")
 const {checkPermissions} = require("../utils")
+const stripe = require("../stripe")
 
 const ONE_HOUR = 3600000
 const ONE_YEAR = 1000 * 60 * 60 * 24 * 365
 
 const Mutation = {
     createUser: (parent, {data}) => database.mutation.createUser({data}),
-    updatePermissions: async (parent, args, context, info) => {
+    updatePermissions: async(parent, args, context, info) => {
         if (!context.req.user) {
             throw new Error("You must be logged in to create an item!")
         }
@@ -43,7 +44,7 @@ const Mutation = {
 
         return updatedUser
     },
-    createItem: async (parent, args, context, info) => {
+    createItem: async(parent, args, context, info) => {
         const {user} = context.req
 
         if (!user) {
@@ -66,7 +67,7 @@ const Mutation = {
     },
     updateItem: (parent, {data, where}) =>
         database.mutation.updateItem({data, where}),
-    deleteItem: async (parent, {where}, context, info) => {
+    deleteItem: async(parent, {where}, context, info) => {
         const item = await database.query.item({where}, "{id, user {id}}")
 
         const ownsItem = context.req.user.id === item.user.id
@@ -82,7 +83,7 @@ const Mutation = {
         const deletedItem = await database.mutation.deleteItem({where}, info)
         return deletedItem
     },
-    signup: async (parent, args, context, info) => {
+    signup: async(parent, args, context, info) => {
         args.email = args.email.toLowerCase()
         args.password = await bcrypt.hash(args.password, 10)
 
@@ -104,7 +105,7 @@ const Mutation = {
 
         return user
     },
-    signin: async (parent, args, context) => {
+    signin: async(parent, args, context) => {
         const {email, password} = args
         const user = await database.query.user(
             {where: {email}},
@@ -134,7 +135,7 @@ const Mutation = {
         const message = {message: "Goodbye!"}
         return message
     },
-    requestReset: async (parent, args) => {
+    requestReset: async(parent, args) => {
         const {email} = args
         const user = await database.query.user({where: {email}})
 
@@ -170,7 +171,7 @@ const Mutation = {
 
         return message
     },
-    reset: async (parent, args, context) => {
+    reset: async(parent, args, context) => {
         const {token, password, confirmPassword} = args
 
         if (password !== confirmPassword) {
@@ -206,7 +207,7 @@ const Mutation = {
 
         return updatedUser
     },
-    addToCart: async (parent, args, context, info) => {
+    addToCart: async(parent, args, context, info) => {
         if (!context.req.user) {
             throw new Error("You must be logged in to add items to your cart!")
         }
@@ -236,7 +237,7 @@ const Mutation = {
             return newCartItem
         }
     },
-    removeFromCart: async (parent, args, context, info) => {
+    removeFromCart: async(parent, args, context, info) => {
         if (!context.req.user) {
             throw new Error(
                 "You must be logged in to remove items from your cart!",
@@ -264,6 +265,58 @@ const Mutation = {
         )
 
         return deletedCartItem
+    },
+    createOrder: async(parent, args, context, info) => {
+        if (!context.req.user) {
+            throw new Error("You must be logged in to purchase items!")
+        }
+
+        const amount = context.req.user.cart.reduce(
+            (total, cartItem) =>
+                total + cartItem.item.price * cartItem.quantity,
+            0,
+        )
+
+        const charge = await stripe.charges.create({
+            amount,
+            currency: "usd",
+            source: args.token,
+        })
+
+        const orderItems = context.req.user.cart.map(cartItem => {
+            const orderItem = {
+                title: cartItem.item.title,
+                description: cartItem.item.description,
+                image: cartItem.item.image,
+                largeImage: cartItem.item.largeImage,
+                price: cartItem.item.price,
+                quantity: cartItem.item.quantity,
+                user: {connect: {id: context.req.user.id}},
+            }
+
+            return orderItem
+        })
+
+        const order = await database.mutation.createOrder(
+            {
+                data: {
+                    items: {create: orderItems},
+                    total: charge.amount,
+                    user: {connect: {id: context.req.user.id}},
+                    charge: charge.id,
+                },
+            },
+            info,
+        )
+
+        const cartItemIds = context.req.user.cart.map(cartItem => cartItem.id)
+        await database.mutation.deleteManyCartItems({
+            where: {
+                id_in: cartItemIds,
+            },
+        })
+
+        return order
     },
 }
 
