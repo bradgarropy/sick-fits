@@ -53,6 +53,18 @@ const Query = {
 
         return order
     },
+    orders: async(parent, args, context, info) => {
+        if (!context.req.user) {
+            throw new Error("You must be logged in to view your orders!")
+        }
+
+        const orders = await database.query.orders(
+            {where: {user: {id: context.req.user.id}}},
+            info,
+        )
+
+        return orders
+    },
 }
 
 module.exports = Query

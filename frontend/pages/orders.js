@@ -1,10 +1,12 @@
 import React from "react"
+import OrderList from "../components/OrderList"
+import PleaseSignIn from "../components/PleaseSignIn"
 
 const OrdersPage = () => {
     return (
-        <>
-            <h1>Orders</h1>
-        </>
+        <PleaseSignIn>
+            <OrderList/>
+        </PleaseSignIn>
     )
 }
 
