@@ -20,7 +20,8 @@
     "scripts": {
         "dev": "next",
         "build": "next build",
-        "start": "next start"
+        "start": "next start",
+        "test": "jest --watch"
     },
     "dependencies": {
         "@apollo/react-hooks": "^3.0.1",
@@ -41,13 +42,15 @@
         "styled-components": "^4.3.2"
     },
     "devDependencies": {
+        "@testing-library/react": "^9.1.4",
         "babel-eslint": "^10.0.2",
         "babel-plugin-styled-components": "^1.10.6",
         "eslint": "^5.16.0",
         "eslint-config-bradgarropy": "^1.1.0",
         "eslint-plugin-jsx-a11y": "^6.2.3",
         "eslint-plugin-react": "^7.14.3",
-        "eslint-plugin-react-hooks": "^1.7.0"
+        "eslint-plugin-react-hooks": "^1.7.0",
+        "jest": "^24.9.0"
     },
     "peerDependencies": {}
 }
