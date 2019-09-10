@@ -6,6 +6,7 @@ import {useQuery} from "@apollo/react-hooks"
 import Head from "next/head"
 import {useRouter} from "next/router"
 import Error from "./Error"
+import {perPage} from "../config"
 
 const PAGINATION_QUERY = gql`
     query PAGINATION_QUERY {
@@ -60,7 +61,7 @@ const Pagination = () => {
     }
 
     const {count} = data.itemsConnection.aggregate
-    const pages = Math.ceil(count / process.env.pagination.perPage)
+    const pages = Math.ceil(count / perPage)
 
     return (
         <PaginationWrapper>

@@ -1,6 +1,7 @@
 import {ApolloClient, InMemoryCache, HttpLink} from "apollo-boost"
 import fetch from "isomorphic-unfetch"
 import {READ_CART_QUERY} from "../components/Cart"
+import {serverUrl} from "../config"
 
 let apolloClient = null
 
@@ -19,7 +20,7 @@ function create(initialState) {
         connectToDevTools: isBrowser,
         ssrMode: !isBrowser, // Disables forceFetch on the server (so queries are only run once)
         link: new HttpLink({
-            uri: process.env.server.url, // Server URL (must be absolute)
+            uri: serverUrl, // Server URL (must be absolute)
             credentials: "include", // Additional fetch() options like `credentials` or `headers`
             // Use fetch() polyfill on the server
             fetch: !isBrowser && fetch,
