@@ -77,3 +77,4 @@ const GetItem = () => {
 }
 
 export default GetItem
+export {READ_ITEM_QUERY}
