@@ -17,7 +17,7 @@ const options = {
 
 server.use(cors(options))
 server.use(cookieParser())
-server.use("*", async(req, res, next) => {
+server.use("*", async (req, res, next) => {
     const {token} = req.cookies
 
     if (token) {

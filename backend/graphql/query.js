@@ -3,7 +3,7 @@ const database = require("../prisma/database")
 const {checkPermissions} = require("../utils")
 
 const Query = {
-    users: async(parent, args, context, info) => {
+    users: async (parent, args, context, info) => {
         const {user} = context.req
 
         if (!user) {
@@ -25,7 +25,7 @@ const Query = {
     items: forwardTo("database"),
     item: forwardTo("database"),
     itemsConnection: forwardTo("database"),
-    me: async(parent, args, context, info) => {
+    me: async (parent, args, context, info) => {
         if (!context.req.user) {
             return null
         }
@@ -37,7 +37,7 @@ const Query = {
 
         return user
     },
-    order: async(parent, args, context, info) => {
+    order: async (parent, args, context, info) => {
         if (!context.req.user) {
             throw new Error("You must be logged in to view your orders!")
         }
@@ -53,7 +53,7 @@ const Query = {
 
         return order
     },
-    orders: async(parent, args, context, info) => {
+    orders: async (parent, args, context, info) => {
         if (!context.req.user) {
             throw new Error("You must be logged in to view your orders!")
         }
