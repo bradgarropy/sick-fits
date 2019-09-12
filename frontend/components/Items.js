@@ -7,12 +7,11 @@ import Item from "./Item"
 import {Center} from "../styles"
 import Error from "./Error"
 import Pagination from "./Pagination"
-import {perPage} from "../config"
 
 const READ_ITEMS_QUERY = gql`
     query READ_ITEMS_QUERY(
         $skip: Int = 0
-        $first: Int = ${perPage}
+        $first: Int = ${process.env.pagination.perPage}
     ) {
         items(
             skip: $skip,
@@ -42,7 +41,7 @@ const Items = () => {
     const {page} = router.query || 1
 
     const {loading, error, data} = useQuery(READ_ITEMS_QUERY, {
-        variables: {skip: perPage * (page - 1)},
+        variables: {skip: process.env.pagination.perPage * (page - 1)},
     })
 
     if (loading) {
@@ -50,22 +49,22 @@ const Items = () => {
     }
 
     if (error) {
-        return <Error error={error}/>
+        return <Error error={error} />
     }
 
     const {items} = data
 
     return (
         <Center>
-            <Pagination/>
+            <Pagination />
 
             <ItemList>
                 {items.map(item => (
-                    <Item key={item.id} item={item}/>
+                    <Item key={item.id} item={item} />
                 ))}
             </ItemList>
 
-            <Pagination/>
+            <Pagination />
         </Center>
     )
 }

@@ -32,7 +32,7 @@ const Navigation = () => {
                         <a>Account</a>
                     </Link>
 
-                    <Signout/>
+                    <Signout />
 
                     <button onClick={toggleCart}>
                         My Cart
